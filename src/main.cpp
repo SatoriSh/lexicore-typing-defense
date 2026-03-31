@@ -1,13 +1,14 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
+#include "circle/circle.h"
 #include "dynamic_text/dynamic_text.h"
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode({ 800, 600 }), "LexiCore");
 
-    DynamicText dynText(std::string("how are you"), window);
+    Circle circle({400.0f,300.0f}, std::string("circle"), window);
 
     while (window.isOpen() && !sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
     {
@@ -20,12 +21,12 @@ int main()
             {
                 char enteredChar = static_cast<char>(textEvent->unicode);
 
-                dynText.inputHandler(enteredChar);
+                circle.dynText.inputHandler(enteredChar);
             }
         }
 
-        window.clear(sf::Color::Black);
-        dynText.render();
+        window.clear(sf::Color(26, 26, 42));
+        circle.update();
         window.display();
     }
 

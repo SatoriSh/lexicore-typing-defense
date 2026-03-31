@@ -11,14 +11,18 @@ public:
 
     void inputHandler(char ch);
     void render();
+    void update(sf::Vector2f position);
 private:
-    sf::Font font;
-    std::vector<sf::Text> dynamicText;
-    sf::RenderWindow& window;
     const std::string fontPath = "../src/font/SansSerifFLF-DemiItalic.otf";
+    const int fontSize = 20;
     const sf::Color defaultColor = sf::Color::White;
     const sf::Color pressedColor = sf::Color::Blue;
+
+    sf::Font font;
+    std::string text;
+    std::vector<sf::Text> dynamicText;
+    sf::RenderWindow& window;
     int currentStrPos = 0;
 
-
+    void resetAllLetters();
 };
