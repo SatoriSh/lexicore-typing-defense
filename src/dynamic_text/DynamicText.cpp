@@ -22,6 +22,18 @@ DynamicText::DynamicText(std::string text, sf::RenderWindow& window)
     }
 }
 
+void DynamicText::inputHandler(char ch)
+{
+    for (int i = 0; i < dynamicText.size(); i++)
+    {
+        if (ch == dynamicText[i].getString() && i == currentStrPos)
+        {
+            dynamicText[i].setFillColor(pressedColor);
+            currentStrPos++;
+        }
+    }
+}
+
 void DynamicText::render()
 {
     for (sf::Text& c : dynamicText)

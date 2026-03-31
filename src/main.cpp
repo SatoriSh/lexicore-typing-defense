@@ -7,7 +7,7 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode({ 800, 600 }), "LexiCore");
 
-    DynamicText dynText(std::string("asda"), window);
+    DynamicText dynText(std::string("how are you"), window);
 
     while (window.isOpen() && !sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
     {
@@ -15,6 +15,13 @@ int main()
         {
             if (event->is<sf::Event::Closed>())
                 window.close();
+
+            if (const auto* textEvent = event->getIf<sf::Event::TextEntered>())
+            {
+                char enteredChar = static_cast<char>(textEvent->unicode);
+
+                dynText.inputHandler(enteredChar);
+            }
         }
 
         window.clear(sf::Color::Black);
