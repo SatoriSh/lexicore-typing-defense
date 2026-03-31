@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
-#include "dynamic_text/DynamicText.h"
+#include "dynamic_text/dynamic_text.h"
 
 int main()
 {

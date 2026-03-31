@@ -1,4 +1,4 @@
-#include "DynamicText.h"
+#include "dynamic_text.h"
 
 DynamicText::DynamicText(std::string text, sf::RenderWindow& window)
     : window(window)
