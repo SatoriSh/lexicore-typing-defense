@@ -14,9 +14,14 @@ Circle::Circle(sf::Vector2f position, std::string text, sf::RenderWindow& window
     circle.setPosition(position);
 }
 
-void Circle::update()
+void Circle::update(float dt)
 {
+    //position.x -= 50.0f * dt;
+    //position.y -= 50.0f * dt;
+
+    circle.setPosition(position);
     render();
+
     dynText.update(position);
 }
 

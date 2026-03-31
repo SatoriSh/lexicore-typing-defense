@@ -7,8 +7,11 @@
 int main()
 {
     sf::RenderWindow window(sf::VideoMode({ 800, 600 }), "LexiCore");
+    window.setFramerateLimit(60);
 
-    Circle circle({400.0f,300.0f}, std::string("circle"), window);
+    sf::Clock clock;
+
+    Circle circle({ 400.0f,300.0f }, std::string("circle"), window);
 
     while (window.isOpen() && !sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
     {
@@ -26,7 +29,10 @@ int main()
         }
 
         window.clear(sf::Color(26, 26, 42));
-        circle.update();
+
+        float dt = clock.restart().asSeconds();
+        circle.update(dt);
+
         window.display();
     }
 

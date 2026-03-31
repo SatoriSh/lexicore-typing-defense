@@ -6,31 +6,29 @@ DynamicText::DynamicText(std::string text, sf::RenderWindow& window)
     if (!font.openFromFile(fontPath))
         printf("font opening error");
 
-    float startX = 0.0f;
     for (char& c : text)
     {
-        sf::Glyph g = font.getGlyph(c, fontSize, false);
-
         sf::Text tempText(font, c);
-        tempText.setFillColor(sf::Color::White);
+        tempText.setFillColor(defaultColor);
         tempText.setCharacterSize(fontSize);
-        tempText.setPosition({ startX, 0 });
+        tempText.setPosition({ 0, 0 });
 
-        startX += g.advance;
-
+        totalWidth += tempText.getLocalBounds().size.x;
         dynamicText.push_back(tempText);
     }
 }
 
 void DynamicText::update(sf::Vector2f position)
 {
-    float startX = position.x;
+    float x = position.x - totalWidth / 2;
+    float y = position.y - fontSize / 1.3;
+
     for (sf::Text& t : dynamicText)
     {
-        t.setPosition({ startX, position.y });
+        t.setPosition({ x, y });
 
         sf::Glyph g = font.getGlyph(t.getString()[0], fontSize, false);
-        startX += g.advance;
+        x += g.advance;
     }
 
     render();

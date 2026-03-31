@@ -15,12 +15,13 @@ public:
 private:
     const std::string fontPath = "../src/font/SansSerifFLF-DemiItalic.otf";
     const int fontSize = 20;
-    const sf::Color defaultColor = sf::Color::White;
-    const sf::Color pressedColor = sf::Color::Blue;
+    const sf::Color defaultColor = sf::Color(200, 200, 232);
+    const sf::Color pressedColor = sf::Color(255, 107, 107);
 
     sf::Font font;
     std::string text;
     std::vector<sf::Text> dynamicText;
+    float totalWidth = 0.0f;
     sf::RenderWindow& window;
     int currentStrPos = 0;
 

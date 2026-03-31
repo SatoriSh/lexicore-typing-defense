@@ -10,7 +10,7 @@ public:
     Circle(sf::Vector2f position, std::string text, sf::RenderWindow& window);
     ~Circle();
 
-    void update();
+    void update(float dt);
     void render();
     DynamicText dynText;
 private:
