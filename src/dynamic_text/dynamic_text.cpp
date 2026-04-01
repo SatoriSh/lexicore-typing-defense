@@ -51,9 +51,9 @@ void DynamicText::inputHandler(char ch)
 
 void DynamicText::render(sf::RenderWindow& window)
 {
-    for (sf::Text& c : dynamicText)
+    for (sf::Text& ch : dynamicText)
     {
-        window.draw(c);
+        window.draw(ch);
     }
 }
 

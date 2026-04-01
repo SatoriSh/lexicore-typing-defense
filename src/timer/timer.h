@@ -12,7 +12,7 @@ public:
 
     bool timeout()
     {
-        if (duration.asSeconds() <= 0)
+        if (duration.asMilliseconds() <= 0)
             return false;
 
         if (clock.getElapsedTime() >= duration)

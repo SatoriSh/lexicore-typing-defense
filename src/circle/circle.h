@@ -7,7 +7,7 @@
 class Circle
 {
 public:
-    Circle(sf::Vector2f position, sf::Vector2f directionToHeart, std::string text);
+    Circle(sf::Vector2f position, sf::Vector2f directionToHeart, std::string text); // сделать const dirToHeart
     ~Circle();
 
     void update(float dt);
