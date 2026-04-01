@@ -14,7 +14,9 @@ int main()
 
     Heart heart({ 400.0f, 300.0f });
 
-    Circle circle({ 400.0f,300.0f }, std::string("circle"));
+    sf::Vector2f directionToHeart = sf::Vector2f{ 400.0f, 300.0f } - sf::Vector2f{ 100.0f, 100.0f };
+    directionToHeart = directionToHeart.normalized();
+    Circle circle({ 100.0f,100.0f }, directionToHeart, std::string("circLe"));
 
     while (window.isOpen() && !sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
     {

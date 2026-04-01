@@ -1,7 +1,7 @@
 #include "circle.h"
 
-Circle::Circle(sf::Vector2f position, std::string text)
-    : dynText(text), position(position)
+Circle::Circle(sf::Vector2f position, sf::Vector2f directionToHeart, std::string text)
+    : dynText(text), directionToHeart(directionToHeart), position(position)
 {
     circle.setRadius(radius);
     circle.setFillColor(fillColor);
@@ -26,8 +26,7 @@ Circle::Circle(sf::Vector2f position, std::string text)
 
 void Circle::update(float dt)
 {
-    //position.x -= 50.0f * dt;
-    //position.y -= 50.0f * dt;
+    position += directionToHeart * speed * dt;
 
     circle.setPosition(position);
     dynText.update(position);
