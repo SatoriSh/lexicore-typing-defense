@@ -1,7 +1,6 @@
 #include "dynamic_text.h"
 
-DynamicText::DynamicText(std::string text, sf::RenderWindow& window)
-    : window(window)
+DynamicText::DynamicText(std::string text)
 {
     if (!font.openFromFile(fontPath))
         printf("font opening error");
@@ -30,8 +29,6 @@ void DynamicText::update(sf::Vector2f position)
         sf::Glyph g = font.getGlyph(t.getString()[0], fontSize, false);
         x += g.advance;
     }
-
-    render();
 }
 
 void DynamicText::inputHandler(char ch)
@@ -52,7 +49,7 @@ void DynamicText::inputHandler(char ch)
     }
 }
 
-void DynamicText::render()
+void DynamicText::render(sf::RenderWindow& window)
 {
     for (sf::Text& c : dynamicText)
     {

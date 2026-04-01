@@ -14,7 +14,7 @@ int main()
 
     Heart heart({ 400.0f, 300.0f });
 
-    Circle circle({ 400.0f,300.0f }, std::string("circle"), window);
+    Circle circle({ 400.0f,300.0f }, std::string("circle"));
 
     while (window.isOpen() && !sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
     {
@@ -36,6 +36,8 @@ int main()
         float dt = clock.restart().asSeconds();
         circle.update(dt);
 
+        window.draw(circle.circle);
+        circle.dynText.render(window);
         window.draw(heart.sprite);
 
         window.display();

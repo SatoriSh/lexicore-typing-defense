@@ -1,7 +1,7 @@
 #include "circle.h"
 
-Circle::Circle(sf::Vector2f position, std::string text, sf::RenderWindow& window)
-    : dynText(text, window), window(window), position(position)
+Circle::Circle(sf::Vector2f position, std::string text)
+    : dynText(text), position(position)
 {
     circle.setRadius(radius);
     circle.setFillColor(fillColor);
@@ -21,6 +21,7 @@ Circle::Circle(sf::Vector2f position, std::string text, sf::RenderWindow& window
     // sf::FloatRect glowRect = glow.getLocalBounds();
     // glow.setOrigin({ glowRect.size.x / 2, glowRect.size.y / 2 });
     // glow.setPosition(position);
+
 }
 
 void Circle::update(float dt)
@@ -29,15 +30,7 @@ void Circle::update(float dt)
     //position.y -= 50.0f * dt;
 
     circle.setPosition(position);
-    render();
-
     dynText.update(position);
-}
-
-void Circle::render()
-{
-    //window.draw(glow);
-    window.draw(circle);
 }
 
 Circle::~Circle()

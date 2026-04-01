@@ -6,11 +6,11 @@
 class DynamicText
 {
 public:
-    DynamicText(std::string text, sf::RenderWindow& window);
+    DynamicText(std::string text);
     ~DynamicText();
 
     void inputHandler(char ch);
-    void render();
+    void render(sf::RenderWindow& window);
     void update(sf::Vector2f position);
 private:
     const std::string fontPath = "../src/font/SansSerifFLF-DemiItalic.otf";
@@ -22,7 +22,6 @@ private:
     std::string text;
     std::vector<sf::Text> dynamicText;
     float totalWidth = 0.0f;
-    sf::RenderWindow& window;
     int currentStrPos = 0;
 
     void resetAllLetters();
