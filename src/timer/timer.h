@@ -1,0 +1,31 @@
+#pragma once
+
+#include <SFML/Graphics.hpp>
+
+class Timer
+{
+public:
+    sf::Clock& getClock() { return clock; };
+    void setDuration(sf::Time t) { duration = t; };
+
+    bool autoRestart = false;
+
+    bool timeout()
+    {
+        if (duration.asSeconds() <= 0)
+            return false;
+
+        if (clock.getElapsedTime() >= duration)
+        {
+            if (autoRestart)
+                clock.restart();
+
+            return true;
+        }
+
+        return false;
+    }
+private:
+    sf::Clock clock;
+    sf::Time duration;
+};

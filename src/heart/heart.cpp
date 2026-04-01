@@ -5,7 +5,7 @@ Heart::Heart(sf::Vector2f position)
 {
     if (!texture.loadFromFile(texturePath))
         printf("heart sprite opening error");
-        
+
     sprite.setTexture(texture);
     sprite.setTextureRect(sf::IntRect({ 0,0 }, { 16,16 }));
 
@@ -17,5 +17,4 @@ Heart::Heart(sf::Vector2f position)
 
 Heart::~Heart()
 {
-
 }
