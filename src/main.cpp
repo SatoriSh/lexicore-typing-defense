@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
+#include "heart/heart.h"
 #include "circle/circle.h"
 #include "dynamic_text/dynamic_text.h"
 
@@ -10,6 +11,8 @@ int main()
     window.setFramerateLimit(60);
 
     sf::Clock clock;
+
+    Heart heart({ 400.0f, 300.0f });
 
     Circle circle({ 400.0f,300.0f }, std::string("circle"), window);
 
@@ -32,6 +35,8 @@ int main()
 
         float dt = clock.restart().asSeconds();
         circle.update(dt);
+
+        window.draw(heart.sprite);
 
         window.display();
     }

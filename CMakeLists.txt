@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(SFML 3 REQUIRED COMPONENTS Graphics Window System)
 
-add_executable(LexiCore src/main.cpp src/dynamic_text/dynamic_text.cpp src/circle/circle.cpp)
+add_executable(LexiCore src/main.cpp src/heart/heart.cpp src/dynamic_text/dynamic_text.cpp src/circle/circle.cpp)
 
 target_include_directories(LexiCore PRIVATE ${CMAKE_SOURCE_DIR}/src)
 

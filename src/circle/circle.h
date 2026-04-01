@@ -21,5 +21,6 @@ private:
 
     sf::Vector2f position;
     sf::CircleShape circle;
+    //sf::CircleShape glow;
     sf::RenderWindow& window;
 };
