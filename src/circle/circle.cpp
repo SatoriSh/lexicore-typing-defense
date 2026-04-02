@@ -38,8 +38,16 @@ void Circle::update(float dt)
     else
     {
         currentExplosionRadius += explosionSpeed * dt;
-        circleShape.setRadius(currentExplosionRadius);
 
+        transparency -= transparencyChangingSpeed * dt;
+        if (transparency < 0.0f) transparency = 0.0f;
+
+        sf::Color explosionColor = sf::Color(255, 0, 0, transparency);
+
+        circleShape.setFillColor(explosionColor);
+        circleShape.setOutlineColor(explosionColor);
+
+        circleShape.setRadius(currentExplosionRadius);
         updateOrigin();
 
         if (currentExplosionRadius >= explosionMaxRadius)
@@ -52,10 +60,11 @@ void Circle::explode()
     if (explosionStarted)
         return;
 
+    std::size_t size = 500;
+    circleShape.setPointCount(size);
+
     explosionStarted = true;
     dynText.circleExplosionStarted = true;
-
-    circleShape.setFillColor(sf::Color(fillColor.r, fillColor.g, fillColor.b, 100));
 }
 
 void Circle::updateOrigin()

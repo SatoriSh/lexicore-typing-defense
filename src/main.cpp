@@ -63,7 +63,8 @@ int main()
             circles.push_back(std::make_unique<Circle>(sf::Vector2f{ 100.0f,100.0f }, directionToHeart, std::string("circle")));
         }
 
-        window.clear(sf::Color(26, 26, 42));
+        //window.clear(sf::Color(26, 26, 42));
+        window.clear(sf::Color(0, 0, 0));
 
         float dt = globalClock.restart().asSeconds();
 
