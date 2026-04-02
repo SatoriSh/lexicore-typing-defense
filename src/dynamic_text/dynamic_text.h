@@ -2,12 +2,15 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <vector>
+#include <functional>
 
 class DynamicText
 {
 public:
     DynamicText(std::string text);
     ~DynamicText();
+
+    std::function<void()> onWordCompleted;
 
     bool circleExplosionStarted = false;
 
@@ -27,4 +30,5 @@ private:
     int currentStrPos = 0;
 
     void resetAllLetters();
+    void checkIfWordCompleted();
 };

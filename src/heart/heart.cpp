@@ -14,7 +14,7 @@ Heart::Heart(sf::Vector2f position)
     sprite.setTexture(texture);
     sprite.setTextureRect(heartRects[health]);
 
-    sprite.setScale({ 4.5f, 4.5f });
+    sprite.setScale({ 2.5f, 2.5f });
     sf::FloatRect heartBounds = sprite.getLocalBounds();
     sprite.setOrigin({ heartBounds.size.x / 2, heartBounds.size.y / 2 });
     sprite.setPosition(position);

@@ -23,6 +23,7 @@ void checkCollisions()
             if (circle->isExplosionStarted())
                 continue;
 
+            circle->isHeartHitExplosion = true;
             circle->explode();
             heart.takeDamage();
         }

@@ -13,6 +13,8 @@ Circle::Circle(sf::Vector2f position, sf::Vector2f directionToHeart, std::string
 
     circleShape.setPosition(position);
 
+    dynText.onWordCompleted = [this]() { explode(); };
+
     //                  glow effect
     // glow = circleShape;
     // glow.setRadius(radius * 3);
@@ -43,7 +45,13 @@ void Circle::update(float dt)
         transparency -= transparencyChangingSpeed * dt;
         if (transparency < 0.0f) transparency = 0.0f;
 
-        sf::Color explosionColor = sf::Color(255, 0, 0, transparency);
+        sf::Color explosionColor = sf::Color(
+            isHeartHitExplosion ? 255 : 0,
+            isHeartHitExplosion ? 0 : 255,
+            0,
+            transparency
+        );
+        
         circleShape.setFillColor(explosionColor);
         circleShape.setOutlineColor(explosionColor);
 

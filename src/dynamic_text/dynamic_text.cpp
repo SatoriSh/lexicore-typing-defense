@@ -50,6 +50,8 @@ void DynamicText::inputHandler(char ch)
                 resetAllLetters();
         }
     }
+
+    checkIfWordCompleted();
 }
 
 void DynamicText::render(sf::RenderWindow& window)
@@ -61,6 +63,14 @@ void DynamicText::render(sf::RenderWindow& window)
     {
         window.draw(ch);
     }
+}
+
+void DynamicText::checkIfWordCompleted()
+{
+    for (sf::Text& t : dynamicText)
+        if (t.getFillColor() != pressedColor) return;
+
+    onWordCompleted();
 }
 
 void DynamicText::resetAllLetters()

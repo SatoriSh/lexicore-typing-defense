@@ -14,6 +14,7 @@ public:
     sf::CircleShape circleShape;
 
     bool isDestroyed = false;
+    bool isHeartHitExplosion = false;
 
     void update(float dt);
     void explode();
@@ -26,10 +27,10 @@ private:
     const float explosionSpeed = 650.0f;
     const size_t pointCount = 200;
     const size_t pointCountAfterExplosion = 1000; // updating the number of points, since the larger the circle, the more points are needed for detail
-    const float transparencyChangingSpeed = 200.0f;
+    const float transparencyChangingSpeed = 450.0f;
 
     float radius = 30.0f;
-    float transparency = 100.0f;
+    float transparency = 200.0f;
 
     sf::Vector2f position;
     sf::Vector2f directionToHeart;
