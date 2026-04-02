@@ -60,8 +60,7 @@ void Circle::explode()
     if (explosionStarted)
         return;
 
-    std::size_t size = 500;
-    circleShape.setPointCount(size);
+    circleShape.setPointCount(pointCountAfterExplosion);
 
     explosionStarted = true;
     dynText.circleExplosionStarted = true;

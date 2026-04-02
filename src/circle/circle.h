@@ -25,6 +25,7 @@ private:
     const float outlineThickness = 2.0f;
     const float speed = 50.0f;
     const float explosionSpeed = 650.0f;
+    const size_t pointCountAfterExplosion = 1000;
     const float transparencyChangingSpeed = 250.0f;
 
     float currentExplosionRadius = radius;
