@@ -20,8 +20,11 @@ void checkCollisions()
     {
         if (heart.sprite.getGlobalBounds().findIntersection(circle->circleShape.getGlobalBounds()))
         {
+            if (circle->isExplosionStarted())
+                continue;
+
             circle->explode();
-            //heart.takeDamage();
+            heart.takeDamage();
         }
     }
 }
@@ -35,7 +38,7 @@ int main()
 
     Timer timer;
     timer.autoRestart = true;
-    timer.setDuration(sf::seconds(1));
+    timer.setDuration(sf::seconds(2));
 
     sf::Vector2f directionToHeart = sf::Vector2f{ 400.0f, 300.0f } - sf::Vector2f{ 100.0f, 100.0f };
     directionToHeart = directionToHeart.normalized();

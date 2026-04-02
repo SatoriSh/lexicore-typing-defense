@@ -17,18 +17,18 @@ public:
 
     void update(float dt);
     void explode();
+    bool isExplosionStarted();
 private:
     const sf::Color fillColor = sf::Color(42, 42, 62);
     const sf::Color outlineColor = sf::Color(90, 90, 138);
-    const float radius = 30.0f;
-    const float explosionMaxRadius = radius * 10;
     const float outlineThickness = 2.0f;
-    const float speed = 50.0f;
+    const float speed = 200.0f;
     const float explosionSpeed = 650.0f;
-    const size_t pointCountAfterExplosion = 1000;
-    const float transparencyChangingSpeed = 250.0f;
+    const size_t pointCount = 200;
+    const size_t pointCountAfterExplosion = 1000; // updating the number of points, since the larger the circle, the more points are needed for detail
+    const float transparencyChangingSpeed = 200.0f;
 
-    float currentExplosionRadius = radius;
+    float radius = 30.0f;
     float transparency = 100.0f;
 
     sf::Vector2f position;
@@ -38,4 +38,5 @@ private:
 
     void updateOrigin();
     //sf::CircleShape glow;
+    //sf::Angle angle; // for rotation
 };

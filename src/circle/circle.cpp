@@ -5,6 +5,7 @@ Circle::Circle(sf::Vector2f position, sf::Vector2f directionToHeart, std::string
 {
     circleShape.setRadius(radius);
     circleShape.setFillColor(fillColor);
+    circleShape.setPointCount(pointCount);
     circleShape.setOutlineColor(outlineColor);
     circleShape.setOutlineThickness(outlineThickness);
 
@@ -37,20 +38,19 @@ void Circle::update(float dt)
     }
     else
     {
-        currentExplosionRadius += explosionSpeed * dt;
+        radius += explosionSpeed * dt;
 
         transparency -= transparencyChangingSpeed * dt;
         if (transparency < 0.0f) transparency = 0.0f;
 
         sf::Color explosionColor = sf::Color(255, 0, 0, transparency);
-
         circleShape.setFillColor(explosionColor);
         circleShape.setOutlineColor(explosionColor);
 
-        circleShape.setRadius(currentExplosionRadius);
+        circleShape.setRadius(radius);
         updateOrigin();
 
-        if (currentExplosionRadius >= explosionMaxRadius)
+        if (transparency == 0.0f)
             isDestroyed = true;
     }
 }
@@ -71,6 +71,8 @@ void Circle::updateOrigin()
     sf::FloatRect circleRect = circleShape.getLocalBounds();
     circleShape.setOrigin({ circleRect.size.x / 2, circleRect.size.y / 2 });
 }
+
+bool Circle::isExplosionStarted() { return explosionStarted; };
 
 Circle::~Circle()
 {
