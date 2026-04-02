@@ -33,6 +33,9 @@ void DynamicText::update(sf::Vector2f position)
 
 void DynamicText::inputHandler(char ch)
 {
+    if (circleExplosionStarted)
+        return;
+
     for (int i = 0; i < dynamicText.size(); i++)
     {
         if (i == currentStrPos)
@@ -51,6 +54,9 @@ void DynamicText::inputHandler(char ch)
 
 void DynamicText::render(sf::RenderWindow& window)
 {
+    if (circleExplosionStarted)
+        return;
+
     for (sf::Text& ch : dynamicText)
     {
         window.draw(ch);

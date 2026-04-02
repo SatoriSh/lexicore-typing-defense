@@ -10,6 +10,22 @@
 
 #include "timer/timer.h"
 
+Heart heart({ 400.0f, 300.0f });
+
+std::vector<std::unique_ptr<Circle>> circles;
+
+void checkCollisions()
+{
+    for (auto& circle : circles)
+    {
+        if (heart.sprite.getGlobalBounds().findIntersection(circle->circleShape.getGlobalBounds()))
+        {
+            circle->explode();
+            //heart.takeDamage();
+        }
+    }
+}
+
 int main()
 {
     sf::RenderWindow window(sf::VideoMode({ 800, 600 }), "LexiCore");
@@ -19,11 +35,7 @@ int main()
 
     Timer timer;
     timer.autoRestart = true;
-    timer.setDuration(sf::seconds(2));
-
-    Heart heart({ 400.0f, 300.0f });
-
-    std::vector<std::unique_ptr<Circle>> circles;
+    timer.setDuration(sf::seconds(1));
 
     sf::Vector2f directionToHeart = sf::Vector2f{ 400.0f, 300.0f } - sf::Vector2f{ 100.0f, 100.0f };
     directionToHeart = directionToHeart.normalized();
@@ -57,10 +69,15 @@ int main()
 
         for (auto& circle : circles)
         {
-            circle->update(dt);
-            window.draw(circle->circle);
-            circle->dynText.render(window);
+            if (!circle->isDestroyed)
+            {
+                circle->update(dt);
+                window.draw(circle->circleShape);
+                circle->dynText.render(window);
+            }
         }
+
+        checkCollisions();
 
         window.draw(heart.sprite);
 

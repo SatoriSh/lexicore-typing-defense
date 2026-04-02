@@ -9,6 +9,8 @@ public:
     DynamicText(std::string text);
     ~DynamicText();
 
+    bool circleExplosionStarted = false;
+
     void inputHandler(char ch);
     void render(sf::RenderWindow& window);
     void update(sf::Vector2f position);
