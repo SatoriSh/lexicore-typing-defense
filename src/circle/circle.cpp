@@ -3,6 +3,8 @@
 Circle::Circle(sf::Vector2f position, sf::Vector2f directionToHeart, std::string text)
     : dynText(text), directionToHeart(directionToHeart), position(position)
 {
+    //printf("Circle created: spawn posX: %f posY: %f\n", position.x, position.y );
+    
     circleShape.setRadius(radius);
     circleShape.setFillColor(fillColor);
     circleShape.setPointCount(pointCount);
@@ -51,7 +53,7 @@ void Circle::update(float dt)
             0,
             transparency
         );
-        
+
         circleShape.setFillColor(explosionColor);
         circleShape.setOutlineColor(explosionColor);
 
