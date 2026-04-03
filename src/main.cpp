@@ -32,7 +32,8 @@ void checkCollisions()
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode({ 800, 600 }), "LexiCore");
+    sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
+    sf::RenderWindow window(sf::VideoMode({ desktop.size.x, desktop.size.y }), "LexiCore", sf::Style::None);
     window.setFramerateLimit(60);
 
     sf::Clock globalClock;
