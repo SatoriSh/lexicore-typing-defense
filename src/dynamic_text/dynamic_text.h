@@ -12,6 +12,8 @@ public:
 
     std::function<void()> onWordCompleted;
 
+    float totalWidth = 0.0f;
+
     bool circleExplosionStarted = false;
 
     void inputHandler(char ch);
@@ -19,14 +21,13 @@ public:
     void update(sf::Vector2f position);
 private:
     const std::string fontPath = "../src/font/SansSerifFLF-DemiItalic.otf";
-    const int fontSize = 20;
+    const int fontSize = 27;
     const sf::Color defaultColor = sf::Color(200, 200, 232);
     const sf::Color pressedColor = sf::Color(255, 107, 107);
 
     sf::Font font;
     std::string text;
     std::vector<sf::Text> dynamicText;
-    float totalWidth = 0.0f;
     int currentStrPos = 0;
 
     void resetAllLetters();

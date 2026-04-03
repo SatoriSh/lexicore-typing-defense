@@ -4,18 +4,20 @@ Circle::Circle(sf::Vector2f position, sf::Vector2f directionToHeart, std::string
     : dynText(text), directionToHeart(directionToHeart), position(position)
 {
     //printf("Circle created: spawn posX: %f posY: %f\n", position.x, position.y );
-    
-    circleShape.setRadius(radius);
+
+    //circleShape.setRadius(radius);
     circleShape.setFillColor(fillColor);
     circleShape.setPointCount(pointCount);
     circleShape.setOutlineColor(outlineColor);
     circleShape.setOutlineThickness(outlineThickness);
 
-    updateOrigin();
-
     circleShape.setPosition(position);
 
     dynText.onWordCompleted = [this]() { explode(); };
+    circleShape.setRadius(dynText.totalWidth / 1.5);
+
+    updateOrigin();
+
 
     //                  glow effect
     // glow = circleShape;
