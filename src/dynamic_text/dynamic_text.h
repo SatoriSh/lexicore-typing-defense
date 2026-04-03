@@ -18,6 +18,7 @@ public:
     void render(sf::RenderWindow& window);
     void update(sf::Vector2f position);
     float getTotalWidth();
+    int getLettersCount();
 private:
     const std::string fontPath = "../src/font/SansSerifFLF-DemiItalic.otf";
     const int fontSize = 30;

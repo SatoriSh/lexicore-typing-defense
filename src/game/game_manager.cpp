@@ -72,6 +72,8 @@ void Game::process()
         // {
         //     printf("%f ", 1.f / dt);
         // }
+
+        printf("Score: %d\n", score);
     }
 }
 
@@ -103,7 +105,11 @@ void Game::spawnCircle()
 
     std::string word = simpleWords.at(getRandomValue(0, simpleWords.size() - 1));
 
-    circles.push_back(std::make_unique<Circle>(spawnPosition, directionToHeart, word));
+    std::unique_ptr<Circle> circle = std::make_unique<Circle>(spawnPosition, directionToHeart, word);
+
+    circle->addScore = [this](int v) { addScore(v); };
+
+    circles.push_back(std::move(circle));
 }
 
 int Game::getRandomValue(int min, int max)
@@ -126,6 +132,11 @@ void Game::checkCollisions()
             heart.takeDamage();
         }
     }
+}
+
+void Game::addScore(int v)
+{
+    score += v;
 }
 
 void Game::initWords()

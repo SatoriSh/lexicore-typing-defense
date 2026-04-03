@@ -82,6 +82,7 @@ void DynamicText::resetAllLetters()
 }
 
 float DynamicText::getTotalWidth() { return totalWidth; };
+int DynamicText::getLettersCount() { return dynamicText.size(); };
 
 DynamicText::~DynamicText()
 {

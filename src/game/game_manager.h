@@ -33,6 +33,8 @@ private:
     Heart heart;
     std::vector<std::unique_ptr<Circle>> circles;
 
+    int score = 0;
+
     sf::Clock globalClock;
     Timer timer;
     std::random_device rd;
@@ -43,5 +45,6 @@ private:
     void initWords();
     void spawnCircle();
     void checkCollisions();
+    void addScore(int v);
     int getRandomValue(int min, int max);
 };

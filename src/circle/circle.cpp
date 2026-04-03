@@ -1,6 +1,6 @@
 #include "circle.h"
 
-Circle::Circle(sf::Vector2f position, sf::Vector2f directionToHeart, std::string text)
+Circle::Circle(sf::Vector2f position, const sf::Vector2f directionToHeart, std::string text)
     : dynText(text), directionToHeart(directionToHeart), position(position)
 {
     circleShape.setFillColor(fillColor);
@@ -76,6 +76,8 @@ void Circle::explode()
 {
     if (explosionStarted)
         return;
+
+    addScore(dynText.getLettersCount() * scoreMultiplier);
 
     circleShape.setPointCount(pointCountAfterExplosion);
 
