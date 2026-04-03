@@ -19,7 +19,7 @@ DynamicText::DynamicText(std::string text)
 
 void DynamicText::update(sf::Vector2f position)
 {
-    float x = position.x - totalWidth / 2;
+    float x = position.x - totalWidth / 1.75;
     float y = position.y - fontSize / 1.3;
 
     for (sf::Text& t : dynamicText)
@@ -80,6 +80,8 @@ void DynamicText::resetAllLetters()
 
     currentStrPos = 0;
 }
+
+float DynamicText::getTotalWidth() { return totalWidth; };
 
 DynamicText::~DynamicText()
 {

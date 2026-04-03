@@ -13,7 +13,6 @@
 
 #include "../timer/timer.h"
 
-
 class Game
 {
 public:
@@ -39,6 +38,9 @@ private:
     std::random_device rd;
     std::mt19937 gen;
 
+    std::vector<std::string> simpleWords;
+
+    void initWords();
     void spawnCircle();
     void checkCollisions();
     int getRandomValue(int min, int max);

@@ -3,9 +3,6 @@
 Circle::Circle(sf::Vector2f position, sf::Vector2f directionToHeart, std::string text)
     : dynText(text), directionToHeart(directionToHeart), position(position)
 {
-    //printf("Circle created: spawn posX: %f posY: %f\n", position.x, position.y );
-
-    //circleShape.setRadius(radius);
     circleShape.setFillColor(fillColor);
     circleShape.setPointCount(pointCount);
     circleShape.setOutlineColor(outlineColor);
@@ -14,7 +11,16 @@ Circle::Circle(sf::Vector2f position, sf::Vector2f directionToHeart, std::string
     circleShape.setPosition(position);
 
     dynText.onWordCompleted = [this]() { explode(); };
-    circleShape.setRadius(dynText.totalWidth / 1.5);
+
+    radius = dynText.getTotalWidth() / 1.3;
+
+    speed -= dynText.getTotalWidth() * 2;
+    if (speed < minSpeed) speed = minSpeed;
+
+    transparencyChangingSpeed -= dynText.getTotalWidth() * 2;
+    if (transparencyChangingSpeed < minTransparencyChangingSpeed) transparencyChangingSpeed = minTransparencyChangingSpeed;
+
+    circleShape.setRadius(radius);
 
     updateOrigin();
 
@@ -27,7 +33,6 @@ Circle::Circle(sf::Vector2f position, sf::Vector2f directionToHeart, std::string
     // sf::FloatRect glowRect = glow.getLocalBounds();
     // glow.setOrigin({ glowRect.size.x / 2, glowRect.size.y / 2 });
     // glow.setPosition(position);
-
 }
 
 void Circle::update(float dt)

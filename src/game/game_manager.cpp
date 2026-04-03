@@ -1,5 +1,7 @@
 #include "game_manager.h"
 
+#include <fstream>
+
 Game::Game(const unsigned int screenWidth, const unsigned int screenHeight)
     :
     screenWidth(screenWidth),
@@ -13,6 +15,8 @@ Game::Game(const unsigned int screenWidth, const unsigned int screenHeight)
 
     timer.autoRestart = true;
     timer.setDuration(sf::milliseconds(1000));
+
+    initWords();
 }
 
 void Game::process()
@@ -97,7 +101,9 @@ void Game::spawnCircle()
     sf::Vector2f directionToHeart = heartPosition - spawnPosition;
     directionToHeart = directionToHeart.normalized();
 
-    circles.push_back(std::make_unique<Circle>(spawnPosition, directionToHeart, "circle"));
+    std::string word = simpleWords.at(getRandomValue(0, simpleWords.size() - 1));
+
+    circles.push_back(std::make_unique<Circle>(spawnPosition, directionToHeart, word));
 }
 
 int Game::getRandomValue(int min, int max)
@@ -120,6 +126,16 @@ void Game::checkCollisions()
             heart.takeDamage();
         }
     }
+}
+
+void Game::initWords()
+{
+    std::ifstream simpleWordsFile("../src/words/.simple_words.txt");
+
+    std::string word;
+
+    while (simpleWordsFile >> word)
+        simpleWords.push_back(word);
 }
 
 Game::~Game()
