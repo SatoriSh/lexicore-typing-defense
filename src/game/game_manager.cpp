@@ -9,6 +9,7 @@ Game::Game(const unsigned int screenWidth, const unsigned int screenHeight)
     heartPosition({ (float)screenWidth / 2, (float)screenHeight / 2 }),
     heart(heartPosition),
     window(sf::VideoMode({ screenWidth, screenHeight }), gameName, sf::Style::None),
+    ui(screenWidth, screenHeight, window),
     gen(rd())
 {
     window.setFramerateLimit(FPS);
@@ -66,14 +67,14 @@ void Game::process()
 
         window.draw(heart.sprite);
 
+        ui.render();
+
         window.display();
 
         // if (timerFPS.timeout())
         // {
         //     printf("%f ", 1.f / dt);
         // }
-
-        printf("Score: %d\n", score);
     }
 }
 
@@ -137,6 +138,7 @@ void Game::checkCollisions()
 void Game::addScore(int v)
 {
     score += v;
+    ui.updateHUD(0, score);
 }
 
 void Game::initWords()

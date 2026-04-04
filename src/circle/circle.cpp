@@ -77,7 +77,8 @@ void Circle::explode()
     if (explosionStarted)
         return;
 
-    addScore(dynText.getLettersCount() * scoreMultiplier);
+    if (!isHeartHitExplosion)
+        addScore(dynText.getLettersCount() * scoreMultiplier);
 
     circleShape.setPointCount(pointCountAfterExplosion);
 

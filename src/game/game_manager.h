@@ -10,6 +10,7 @@
 #include "../heart/heart.h"
 #include "../circle/circle.h"
 #include "../dynamic_text/dynamic_text.h"
+#include "../ui/ui.h"
 
 #include "../timer/timer.h"
 
@@ -29,6 +30,7 @@ private:
     const sf::Vector2f heartPosition;
 
     sf::RenderWindow window;
+    UI ui;
 
     Heart heart;
     std::vector<std::unique_ptr<Circle>> circles;
