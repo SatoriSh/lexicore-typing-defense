@@ -17,6 +17,12 @@ Game::Game(const unsigned int screenWidth, const unsigned int screenHeight)
     timer.autoRestart = true;
     timer.setDuration(sf::milliseconds(1000));
 
+    waveTimer.autoRestart = true;
+    waveTimer.setDuration(sf::seconds(waveDuration));
+
+    ui.bar.setMaxWidth(waveDuration);
+    ui.bar.setPosition({ screenWidth / 2 - ui.bar.backgroundBar.getLocalBounds().size.x / 2, 30 });
+
     initWords();
 }
 
@@ -44,9 +50,15 @@ void Game::process()
             }
         }
 
+        ui.bar.updateWidth(waveTimer.getLeftTime().asSeconds());
+
         if (timer.timeout())
         {
             spawnCircle();
+        }
+        if (waveTimer.timeout())
+        {
+            waveFinish();
         }
 
         window.clear(backgroundColor);
@@ -78,6 +90,13 @@ void Game::process()
     }
 }
 
+void Game::waveFinish()
+{
+    currentWave++;
+    ui.updateHUD(currentWave, score);
+    // explose all circles
+}
+
 void Game::spawnCircle()
 {
     sf::Vector2f spawnPosition;
@@ -105,18 +124,10 @@ void Game::spawnCircle()
     directionToHeart = directionToHeart.normalized();
 
     std::string word = simpleWords.at(getRandomValue(0, simpleWords.size() - 1));
-
     std::unique_ptr<Circle> circle = std::make_unique<Circle>(spawnPosition, directionToHeart, word);
-
     circle->addScore = [this](int v) { addScore(v); };
 
     circles.push_back(std::move(circle));
-}
-
-int Game::getRandomValue(int min, int max)
-{
-    std::uniform_int_distribution<int> dist(min, max);
-    return dist(gen);
 }
 
 void Game::checkCollisions()
@@ -138,17 +149,23 @@ void Game::checkCollisions()
 void Game::addScore(int v)
 {
     score += v;
-    ui.updateHUD(0, score);
+    ui.updateHUD(currentWave, score);
 }
 
 void Game::initWords()
 {
-    std::ifstream simpleWordsFile("../src/words/.simple_words.txt");
+    std::ifstream simpleWordsFile(simpleWordsPath);
 
     std::string word;
 
     while (simpleWordsFile >> word)
         simpleWords.push_back(word);
+}
+
+int Game::getRandomValue(int min, int max)
+{
+    std::uniform_int_distribution<int> dist(min, max);
+    return dist(gen);
 }
 
 Game::~Game()

@@ -12,14 +12,41 @@ public:
     void updateHUD(int currentWave, int score);
 
     void render();
+
+    struct Bar
+    {
+    public:
+        Bar();
+        ~Bar();
+
+        void setMaxWidth(float v);
+        void updateWidth(float v);
+        void setPosition(sf::Vector2f position);
+
+        sf::RectangleShape backgroundBar;
+        sf::RectangleShape fillBar;
+    private:
+        const float barHeight = 30;
+        const int widthMultiplier = 5;
+        float barWidth;
+        float fillBarWidth;
+    };
+
+    Bar bar;
 private:
     const unsigned int screenWidth;
     const unsigned int screenHeight;
     const std::string fontPath = "../src/font/SansSerifFLF-DemiItalic.otf";
+    const float textCharacterSize = 35.0f;
+    const sf::Color textColor = sf::Color::Blue;
+
+    const sf::Vector2f currentWaveTextPos = { 30, 30 };
+
+    const sf::Vector2f scoreTextPos = { 30, 75 };
 
     sf::RenderWindow& window;
 
-    int currentWave = 0;
+    int currentWave = 1;
     int score = 0;
 
     sf::Font font;

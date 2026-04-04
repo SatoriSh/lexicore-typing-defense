@@ -7,6 +7,8 @@ class Timer
 public:
     sf::Clock& getClock() { return clock; };
     void setDuration(sf::Time t) { duration = t; };
+    sf::Time getDuration() { return duration; };
+    sf::Time getLeftTime() { return duration - clock.getElapsedTime(); };
 
     bool autoRestart = false;
 

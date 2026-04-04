@@ -28,6 +28,7 @@ private:
     const int screenWidth;
     const int screenHeight;
     const sf::Vector2f heartPosition;
+    const std::string simpleWordsPath = "../src/words/.simple_words.txt";
 
     sf::RenderWindow window;
     UI ui;
@@ -36,9 +37,13 @@ private:
     std::vector<std::unique_ptr<Circle>> circles;
 
     int score = 0;
+    int currentWave = 1;
+
+    int waveDuration = 90;
 
     sf::Clock globalClock;
     Timer timer;
+    Timer waveTimer;
     std::random_device rd;
     std::mt19937 gen;
 
@@ -48,5 +53,6 @@ private:
     void spawnCircle();
     void checkCollisions();
     void addScore(int v);
+    void waveFinish();
     int getRandomValue(int min, int max);
 };
