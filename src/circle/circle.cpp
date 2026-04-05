@@ -10,7 +10,11 @@ Circle::Circle(sf::Vector2f position, const sf::Vector2f directionToHeart, std::
 
     circleShape.setPosition(position);
 
-    dynText.onWordCompleted = [this]() { explode(); };
+    dynText.onWordCompleted = [this]()
+        {
+            addScore(dynText.getLettersCount() * scoreMultiplier);
+            explode();
+        };
 
     radius = dynText.getTotalWidth() / 1.3;
 
@@ -76,9 +80,6 @@ void Circle::explode()
 {
     if (explosionStarted)
         return;
-
-    if (!isHeartHitExplosion)
-        addScore(dynText.getLettersCount() * scoreMultiplier);
 
     circleShape.setPointCount(pointCountAfterExplosion);
 
