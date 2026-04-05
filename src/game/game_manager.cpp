@@ -14,8 +14,8 @@ Game::Game(const unsigned int screenWidth, const unsigned int screenHeight)
 {
     window.setFramerateLimit(FPS);
 
-    timer.autoRestart = true;
-    timer.setDuration(sf::milliseconds(1000));
+    circleSpawnTimer.autoRestart = true;
+    circleSpawnTimer.setDuration(timeToSpawnCircle);
 
     waveTimer.autoRestart = true;
     waveTimer.setDuration(sf::seconds(waveDuration));
@@ -56,7 +56,7 @@ void Game::process()
 
         ui.bar.updateWidth(waveTimer.getLeftTime().asSeconds());
 
-        if (timer.timeout() && waveBegin)
+        if (circleSpawnTimer.timeout() && waveBegin)
         {
             spawnCircle();
         }
@@ -69,6 +69,7 @@ void Game::process()
             pauseAfterWaveTimer.getClock().reset();
             circles.clear();
             ui.resetAnimState();
+            updateDifficulty();
             waveBegin = true;
         }
 
@@ -107,6 +108,8 @@ void Game::process()
 void Game::waveFinish()
 {
     currentWave++;
+    uniqueWave = currentWave % 3 == 0 ? true : false;
+
     ui.updateHUD(currentWave, score);
     blowUpCircles();
 
@@ -114,14 +117,26 @@ void Game::waveFinish()
     pauseAfterWaveTimer.getClock().start();
 }
 
+void Game::updateDifficulty()
+{
+    timeToSpawnCircle -= circleSpawnDurationDecrease;
+    if (timeToSpawnCircle < minTimeToSpawnCircle)
+        timeToSpawnCircle = minTimeToSpawnCircle;
+
+    if (uniqueWave)
+        timeToSpawnCircle = timeToSpawnCircleIfUniqueWave;
+
+    circleSpawnTimer.setDuration(timeToSpawnCircle);
+}
+
 void Game::spawnCircle()
 {
-    std::string word = simpleWords.at(getRandomValue(0, simpleWords.size() - 1));
+    std::string word = getWordForCircle();
     float offset = word.size() * 12;
 
     sf::Vector2f spawnPosition;
-    int spawnSide = getRandomValue(1, 4);
 
+    int spawnSide = getRandomValue(1, 4);
     switch (spawnSide)
     {
     case 1:  // up
@@ -163,6 +178,25 @@ void Game::checkCollisions()
     }
 }
 
+std::string Game::getWordForCircle()
+{
+    if (uniqueWave)
+    {
+        return uniqueWords.at(getRandomValue(0, uniqueWords.size() - 1));
+    }
+    else
+    {
+        if (currentWave <= 5 && simpleWords.size() > 0)
+            return simpleWords.at(getRandomValue(0, simpleWords.size() - 1));
+        else if (currentWave <= 10 && mediumWords.size() > 0)
+            return mediumWords.at(getRandomValue(0, mediumWords.size() - 1));
+        else if (hardWords.size() > 0)
+            return hardWords.at(getRandomValue(0, hardWords.size() - 1));
+    }
+
+    return "?";
+}
+
 void Game::blowUpCircles()
 {
     for (auto& circle : circles)
@@ -182,12 +216,23 @@ void Game::addScore(int v)
 
 void Game::initWords()
 {
-    std::ifstream simpleWordsFile(simpleWordsPath);
-
     std::string word;
 
+    std::ifstream simpleWordsFile(simpleWordsPath);
     while (simpleWordsFile >> word)
         simpleWords.push_back(word);
+
+    std::ifstream mediumWordsFile(mediumWordsPath);
+    while (mediumWordsFile >> word)
+        mediumWords.push_back(word);
+
+    std::ifstream hardWordsFile(hardWordsPath);
+    while (hardWordsFile >> word)
+        hardWords.push_back(word);
+
+    std::ifstream uniqueWordsFile(uniqueWordsPath);
+    while (uniqueWordsFile >> word)
+        uniqueWords.push_back(word);
 }
 
 int Game::getRandomValue(int min, int max)

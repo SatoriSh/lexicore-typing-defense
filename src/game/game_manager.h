@@ -29,7 +29,14 @@ private:
     const int screenHeight;
     const sf::Vector2f heartPosition;
     const std::string simpleWordsPath = "../src/words/.simple_words.txt";
+    const std::string mediumWordsPath = "../src/words/.medium_words.txt";
+    const std::string hardWordsPath = "../src/words/.hard_words.txt";
+    const std::string uniqueWordsPath = "../src/words/.unique_words.txt";
     const int pauseAfterWave = 3;
+    const sf::Time timeToSpawnCircleIfUniqueWave = sf::milliseconds(450);
+    const sf::Time minTimeToSpawnCircle = sf::milliseconds(800);
+    const sf::Time maxTimeToSpawnCircle = sf::milliseconds(2000);
+    const sf::Time circleSpawnDurationDecrease = sf::milliseconds(80);
 
     sf::RenderWindow window;
     UI ui;
@@ -40,23 +47,30 @@ private:
     int score = 0;
     int currentWave = 1;
 
-    int waveDuration = 60;
+    int waveDuration = 30;
     bool waveBegin = true;
+    bool uniqueWave = false;
 
     sf::Clock globalClock;
-    Timer timer;
+    Timer circleSpawnTimer;
     Timer waveTimer;
     Timer pauseAfterWaveTimer;
+    sf::Time timeToSpawnCircle = maxTimeToSpawnCircle;
     std::random_device rd;
     std::mt19937 gen;
 
     std::vector<std::string> simpleWords;
+    std::vector<std::string> mediumWords;
+    std::vector<std::string> hardWords;
+    std::vector<std::string> uniqueWords;
 
     void initWords();
+    std::string getWordForCircle();
     void spawnCircle();
     void checkCollisions();
     void addScore(int v);
     void waveFinish();
     void blowUpCircles();
+    void updateDifficulty();
     int getRandomValue(int min, int max);
 };
