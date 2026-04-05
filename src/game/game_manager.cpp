@@ -68,6 +68,7 @@ void Game::process()
         {
             pauseAfterWaveTimer.getClock().reset();
             circles.clear();
+            ui.resetAnimState();
             waveBegin = true;
         }
 
@@ -90,6 +91,9 @@ void Game::process()
         window.draw(heart.sprite);
 
         ui.render();
+
+        if (!waveBegin)
+            ui.renderNextWaveAnim(dt);
 
         window.display();
 

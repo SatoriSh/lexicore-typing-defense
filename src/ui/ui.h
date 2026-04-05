@@ -12,6 +12,8 @@ public:
     void updateHUD(int currentWave, int score);
 
     void render();
+    void renderNextWaveAnim(float dt);
+    void resetAnimState();
 
     struct Bar
     {
@@ -39,17 +41,21 @@ private:
     const std::string fontPath = "../src/font/SansSerifFLF-DemiItalic.otf";
     const float textCharacterSize = 35.0f;
     const sf::Color textColor = sf::Color::Blue;
-
     const sf::Vector2f currentWaveTextPos = { 30, 30 };
-
     const sf::Vector2f scoreTextPos = { 30, 75 };
+    const float transparencyChangingSpeed = 180.0f;
 
     sf::RenderWindow& window;
 
     int currentWave = 1;
     int score = 0;
 
+    float transparency = 0.0f;
+    bool isNextWaveAnimFadeIn = true;
+    bool isNextWaveAnimFinish = false;
+
     sf::Font font;
     sf::Text currentWaveText;
     sf::Text scoreText;
+    sf::Text nextWaveAnimText;
 };

@@ -6,7 +6,8 @@ UI::UI(const unsigned int screenWidth, const unsigned int screenHeight, sf::Rend
     screenHeight(screenHeight),
     window(window),
     currentWaveText(font, ""),
-    scoreText(font, "")
+    scoreText(font, ""),
+    nextWaveAnimText(font, "")
 {
     if (!font.openFromFile(fontPath))
         printf("font opening error");
@@ -21,6 +22,9 @@ UI::UI(const unsigned int screenWidth, const unsigned int screenHeight, sf::Rend
     scoreText.setFillColor(textColor);
     scoreText.setPosition(scoreTextPos);
 
+    nextWaveAnimText.setFont(font);
+    nextWaveAnimText.setCharacterSize(100);
+
     updateHUD(currentWave, score);
 }
 
@@ -33,15 +37,49 @@ void UI::render()
     window.draw(bar.fillBar);
 }
 
+void UI::renderNextWaveAnim(float dt)
+{
+    if (isNextWaveAnimFinish)
+        return;
+
+    nextWaveAnimText.setPosition({ screenWidth / 2 - nextWaveAnimText.getLocalBounds().size.x / 2, 200 });
+
+    if (isNextWaveAnimFadeIn)
+    {
+        transparency += transparencyChangingSpeed * dt;
+        if (transparency > 255)
+        {
+            transparency = 255;
+            isNextWaveAnimFadeIn = false;
+        }
+    }
+    else
+    {
+        transparency -= transparencyChangingSpeed * dt;
+        if (transparency < 0)
+        {
+            transparency = 0;
+            isNextWaveAnimFadeIn = true;
+            isNextWaveAnimFinish = true;
+        }
+    }
+
+    nextWaveAnimText.setFillColor(sf::Color{ 255, 0, 0, (uint8_t)transparency });
+
+    window.draw(nextWaveAnimText);
+}
+
 void UI::updateHUD(int currentWave, int score)
 {
     this->currentWave = currentWave;
     this->score = score;
 
     currentWaveText.setString(std::string("Wave: " + std::to_string(currentWave)));
-
     scoreText.setString(std::string("Score: ") + std::to_string(score));
+    nextWaveAnimText.setString(std::string("Wave " + std::to_string(currentWave)));
 }
+
+void UI::resetAnimState() { isNextWaveAnimFinish = false; };
 
 UI::~UI()
 {
