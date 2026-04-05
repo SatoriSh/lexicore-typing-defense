@@ -117,7 +117,7 @@ void Game::waveFinish()
 void Game::spawnCircle()
 {
     std::string word = simpleWords.at(getRandomValue(0, simpleWords.size() - 1));
-    float offset = word.size() * 10;
+    float offset = word.size() * 12;
 
     sf::Vector2f spawnPosition;
     int spawnSide = getRandomValue(1, 4);
