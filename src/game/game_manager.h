@@ -29,6 +29,7 @@ private:
     const int screenHeight;
     const sf::Vector2f heartPosition;
     const std::string simpleWordsPath = "../src/words/.simple_words.txt";
+    const int pauseAfterWave = 3;
 
     sf::RenderWindow window;
     UI ui;
@@ -39,11 +40,13 @@ private:
     int score = 0;
     int currentWave = 1;
 
-    int waveDuration = 90;
+    int waveDuration = 60;
+    bool waveBegin = true;
 
     sf::Clock globalClock;
     Timer timer;
     Timer waveTimer;
+    Timer pauseAfterWaveTimer;
     std::random_device rd;
     std::mt19937 gen;
 
@@ -54,5 +57,6 @@ private:
     void checkCollisions();
     void addScore(int v);
     void waveFinish();
+    void blowUpCircles();
     int getRandomValue(int min, int max);
 };

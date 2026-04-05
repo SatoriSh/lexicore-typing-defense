@@ -1,7 +1,12 @@
 #include "ui.h"
 
 UI::UI(const unsigned int screenWidth, const unsigned int screenHeight, sf::RenderWindow& window)
-    : screenWidth(screenWidth), screenHeight(screenHeight), window(window), currentWaveText(font, ""), scoreText(font, "")
+    :
+    screenWidth(screenWidth),
+    screenHeight(screenHeight),
+    window(window),
+    currentWaveText(font, ""),
+    scoreText(font, "")
 {
     if (!font.openFromFile(fontPath))
         printf("font opening error");

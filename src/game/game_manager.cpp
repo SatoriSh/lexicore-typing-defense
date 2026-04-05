@@ -20,6 +20,10 @@ Game::Game(const unsigned int screenWidth, const unsigned int screenHeight)
     waveTimer.autoRestart = true;
     waveTimer.setDuration(sf::seconds(waveDuration));
 
+    pauseAfterWaveTimer.setDuration(sf::seconds(pauseAfterWave));
+    pauseAfterWaveTimer.autoRestart = false;
+    pauseAfterWaveTimer.getClock().stop();
+
     ui.bar.setMaxWidth(waveDuration);
     ui.bar.setPosition({ screenWidth / 2 - ui.bar.backgroundBar.getLocalBounds().size.x / 2, 30 });
 
@@ -52,13 +56,19 @@ void Game::process()
 
         ui.bar.updateWidth(waveTimer.getLeftTime().asSeconds());
 
-        if (timer.timeout())
+        if (timer.timeout() && waveBegin)
         {
             spawnCircle();
         }
         if (waveTimer.timeout())
         {
             waveFinish();
+        }
+        if (pauseAfterWaveTimer.timeout())
+        {
+            pauseAfterWaveTimer.getClock().reset();
+            circles.clear();
+            waveBegin = true;
         }
 
         window.clear(backgroundColor);
@@ -94,15 +104,19 @@ void Game::waveFinish()
 {
     currentWave++;
     ui.updateHUD(currentWave, score);
-    // explose all circles
+    blowUpCircles();
+
+    waveBegin = false;
+    pauseAfterWaveTimer.getClock().start();
 }
 
 void Game::spawnCircle()
 {
+    std::string word = simpleWords.at(getRandomValue(0, simpleWords.size() - 1));
+    float offset = word.size() * 10;
+
     sf::Vector2f spawnPosition;
     int spawnSide = getRandomValue(1, 4);
-
-    float offset = 100;
 
     switch (spawnSide)
     {
@@ -123,7 +137,6 @@ void Game::spawnCircle()
     sf::Vector2f directionToHeart = heartPosition - spawnPosition;
     directionToHeart = directionToHeart.normalized();
 
-    std::string word = simpleWords.at(getRandomValue(0, simpleWords.size() - 1));
     std::unique_ptr<Circle> circle = std::make_unique<Circle>(spawnPosition, directionToHeart, word);
     circle->addScore = [this](int v) { addScore(v); };
 
@@ -142,6 +155,17 @@ void Game::checkCollisions()
             circle->isHeartHitExplosion = true;
             circle->explode();
             heart.takeDamage();
+        }
+    }
+}
+
+void Game::blowUpCircles()
+{
+    for (auto& circle : circles)
+    {
+        if (!circle->isDestroyed)
+        {
+            circle->explode();
         }
     }
 }
