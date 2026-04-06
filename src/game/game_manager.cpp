@@ -25,7 +25,7 @@ Game::Game(const unsigned int screenWidth, const unsigned int screenHeight)
     pauseAfterWaveTimer.getClock().stop();
 
     ui.bar.setMaxWidth(waveDuration);
-    ui.bar.setPosition({ screenWidth / 2 - ui.bar.backgroundBar.getLocalBounds().size.x / 2, 30 });
+    ui.bar.setPosition({ (float)screenWidth / 2 - ui.bar.backgroundBar.getLocalBounds().size.x / 2, 30 });
 
     initWords();
 }

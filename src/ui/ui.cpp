@@ -42,7 +42,7 @@ void UI::renderNextWaveAnim(float dt)
     if (isNextWaveAnimFinish)
         return;
 
-    nextWaveAnimText.setPosition({ screenWidth / 2 - nextWaveAnimText.getLocalBounds().size.x / 2, 200 });
+    nextWaveAnimText.setPosition({ (float)screenWidth / 2 - nextWaveAnimText.getLocalBounds().size.x / 2, 200 });
 
     if (isNextWaveAnimFadeIn)
     {
@@ -90,12 +90,12 @@ UI::Bar::Bar()
 {
     backgroundBar.setSize({ barWidth, barHeight });
     backgroundBar.setFillColor(sf::Color(0, 255, 0, 0));
-    backgroundBar.setOutlineColor(sf::Color(0, 255, 0, 127));
+    backgroundBar.setOutlineColor(sf::Color(0, 255, 0, 160));
     backgroundBar.setOutlineThickness(2.5f);
 
 
     fillBar.setSize({ barWidth, barHeight });
-    fillBar.setFillColor(sf::Color(255, 0, 0, 127));
+    fillBar.setFillColor(sf::Color(255, 0, 0, 160));
 }
 
 void UI::Bar::setMaxWidth(float v)
