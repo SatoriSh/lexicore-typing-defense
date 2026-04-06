@@ -10,10 +10,23 @@
 enum State
 {
     MENU,
-    GAME
+    GAME,
+    PAUSE
 };
 
 State gameState = State::MENU;
+
+std::unique_ptr<Game> game = nullptr;
+
+void initGame(sf::RenderWindow& window, int wave)
+{
+    game = std::make_unique<Game>(window, wave);
+
+    game->onEscPressed = [&]()
+    {
+        gameState = State::PAUSE;
+    };
+}
 
 int main()
 {
@@ -25,18 +38,16 @@ int main()
     sf::RenderWindow window(sf::VideoMode({screenWidth, screenHeight}), "LexiCore", sf::Style::None);
     window.setFramerateLimit(FPS);
 
-    std::unique_ptr<Game> game = nullptr;
-
     Menu menu(screenWidth, screenHeight);
 
     menu.onButtonClicked = [&](std::string button)
     {
         if (button == "start")
         {
-            game = std::make_unique<Game>(window, 1); 
+            initGame(window, 1);
             gameState = State::GAME;
         }
-        else if (button == "continue")
+        else if (button == "checkpoint_continue")
         {
             int wave = 1;
             std::ifstream file("../src/data/.checkpoint.txt");
@@ -45,8 +56,17 @@ int main()
                 file.close();
             }
 
-            game = std::make_unique<Game>(window, wave);
+            initGame(window, wave);
             gameState = State::GAME;
+        }
+        else if (button == "pause_continue")
+        {
+            game->startTimers();
+            gameState = State::GAME;
+        }
+        else if (button == "open_menu")
+        {
+            gameState = State::MENU;
         }
         else if (button == "exit")
             window.close();
@@ -61,6 +81,9 @@ int main()
             break;
         case State::GAME:
             game->process();
+            break;
+        case State::PAUSE:
+            menu.pauseRender(window);
             break;
         }
     }

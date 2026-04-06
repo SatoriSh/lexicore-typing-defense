@@ -27,16 +27,6 @@ Circle::Circle(sf::Vector2f position, const sf::Vector2f directionToHeart, std::
     circleShape.setRadius(radius);
 
     updateOrigin();
-
-
-    //                  glow effect
-    // glow = circleShape;
-    // glow.setRadius(radius * 3);
-    // glow.setOutlineThickness(0);
-    // glow.setFillColor(sf::Color(fillColor.r, fillColor.g, fillColor.b, 50));
-    // sf::FloatRect glowRect = glow.getLocalBounds();
-    // glow.setOrigin({ glowRect.size.x / 2, glowRect.size.y / 2 });
-    // glow.setPosition(position);
 }
 
 void Circle::update(float dt)
@@ -97,5 +87,4 @@ bool Circle::isExplosionStarted() { return explosionStarted; };
 
 Circle::~Circle()
 {
-
 }

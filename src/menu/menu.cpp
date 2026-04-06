@@ -1,9 +1,12 @@
 #include "menu.h"
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
 Menu::Menu(const unsigned int screenWidth, const unsigned int screenHeight)
-    : screenWidth(screenWidth), screenHeight(screenHeight), startText(font, ""), continueText(font, ""), exitText(font, "")
+    : screenWidth(screenWidth), screenHeight(screenHeight), startText(font, ""),
+      continueText(font, ""), exitText(font, ""), pauseContinueText(font, ""),
+      pauseOpenMenuText(font, "")
 {
     if (!font.openFromFile(fontPath))
         printf("font opening error");
@@ -32,11 +35,33 @@ Menu::Menu(const unsigned int screenWidth, const unsigned int screenHeight)
     continueText.setPosition({(float)screenWidth / 2 - continueText.getLocalBounds().size.x / 2, startY});
 
     startY += (float)screenHeight / 10;
-    exitText.setPosition({(float)screenWidth / 2 - exitText.getLocalBounds().size.x / 2, startY});
+    exitText.setPosition( {(float)screenWidth / 2 - exitText.getLocalBounds().size.x / 2, startY});
+
+    pauseContinueText.setFont(font);
+    pauseOpenMenuText.setFont(font);
+
+    pauseContinueText.setCharacterSize(64);
+    pauseOpenMenuText.setCharacterSize(64);
+
+    pauseContinueText.setString("[C]    Continue");
+    pauseOpenMenuText.setString("[M]    Open Menu");
+
+    pauseContinueText.setFillColor({0,0,255});
+    pauseOpenMenuText.setFillColor({0, 0, 255});
+
+    startY = (float)screenHeight / 4;
+
+    pauseContinueText.setPosition({(float)screenWidth / 2 - pauseContinueText.getLocalBounds().size.x / 2, startY});
+
+    startY += (float)screenHeight / 10;
+    pauseOpenMenuText.setPosition( {(float)screenWidth / 2 - pauseOpenMenuText.getLocalBounds().size.x / 2, startY});
 }
 
 void Menu::render(sf::RenderWindow& window)
 {
+    pause = false;
+    buttonClicked = false;
+
     while (!buttonClicked)
     {
         inputHandler();
@@ -49,19 +74,47 @@ void Menu::render(sf::RenderWindow& window)
     }
 }
 
+void Menu::pauseRender(sf::RenderWindow &window)
+{
+    pause = true;
+    buttonClicked = false;
+
+    while (!buttonClicked)
+    {   
+        inputHandler();
+
+        window.clear({0,0,0});
+        window.draw(pauseContinueText);
+        window.draw(pauseOpenMenuText);
+        window.display();
+    }
+}
+
 void Menu::inputHandler()
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) && !pause)
     {
         onButtonClicked("start");
         buttonClicked = true;
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::C))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::C) && !pause)
     {
-        onButtonClicked("continue");
+        onButtonClicked("checkpoint_continue");
         buttonClicked = true;
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::C) && pause)
+    {
+        onButtonClicked("pause_continue");
+        buttonClicked = true;
+        pause = false;
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::M) && pause)
+    {
+        onButtonClicked("open_menu");
+        buttonClicked = true;
+        pause = false;
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E) && !pause)
     {
         onButtonClicked("exit");
         buttonClicked = true;

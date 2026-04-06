@@ -82,7 +82,12 @@ void UI::updateHUD(int currentWave, int score)
     nextWaveAnimText.setString(std::string("Wave " + std::to_string(currentWave) + checkpoint));
 }
 
-void UI::resetAnimState() { isNextWaveAnimFinish = false; };
+void UI::resetAnimState()
+{
+    isNextWaveAnimFinish = false; 
+    isNextWaveAnimFadeIn = true; 
+    transparency = 0.0f;
+};
 
 UI::~UI()
 {

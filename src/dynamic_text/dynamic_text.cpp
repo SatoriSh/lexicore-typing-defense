@@ -46,8 +46,8 @@ void DynamicText::inputHandler(char ch)
                 currentStrPos++;
                 break;
             }
-            else if (ch != dynamicText[i].getString()[0])
-                resetAllLetters();
+            //else if (ch != dynamicText[i].getString()[0])
+                //resetAllLetters(); // maybe later, but for now it's too difficult
         }
     }
 

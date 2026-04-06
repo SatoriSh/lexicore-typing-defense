@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <functional>
 #include <random>
 
 #include "../heart/heart.h"
@@ -20,6 +21,10 @@ class Game
 public:
     Game(sf::RenderWindow& window, int checkpoint);
     ~Game();
+
+    std::function<void()> onEscPressed;
+    void startTimers();
+    void stopTimers();
 
     void process();
 private:
@@ -51,6 +56,7 @@ private:
     int waveDuration = 6;
     bool waveBegin = true;
     bool uniqueWave = false;
+    bool stopInput = false;
 
     sf::Clock globalClock;
     Timer circleSpawnTimer;
@@ -73,6 +79,7 @@ private:
     void blowUpCircles();
     void updateDifficulty();
     void saveCheckpoint();
+    void skipWaves(int count);
 
     std::string getWordForCircle();
     int getRandomValue(int min, int max);

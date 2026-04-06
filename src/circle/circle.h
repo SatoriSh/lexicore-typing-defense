@@ -45,6 +45,4 @@ private:
     bool explosionStarted = false;
 
     void updateOrigin();
-    //sf::CircleShape glow;
-    //sf::Angle angle; // for rotation
 };

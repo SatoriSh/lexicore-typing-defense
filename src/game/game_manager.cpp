@@ -1,6 +1,6 @@
-#include "game_manager.h"
-
+#include <SFML/Window/Keyboard.hpp>
 #include <fstream>
+#include "game_manager.h"
 
 Game::Game(sf::RenderWindow &window, int checkpoint)
     : window(window),
@@ -12,7 +12,7 @@ Game::Game(sf::RenderWindow &window, int checkpoint)
     circleSpawnTimer.autoRestart = true;
     circleSpawnTimer.setDuration(timeToSpawnCircle);
 
-    waveTimer.autoRestart = true;
+    waveTimer.autoRestart = false;
     waveTimer.setDuration(sf::seconds(waveDuration));
 
     pauseAfterWaveTimer.setDuration(pauseAfterWave);
@@ -24,10 +24,7 @@ Game::Game(sf::RenderWindow &window, int checkpoint)
 
     if (checkpoint > 1)
     {
-        for (int i = 0; i < checkpoint; i++)
-        {
-            waveFinish();
-        }
+        skipWaves(checkpoint);
     }
 
     ui.updateHUD(currentWave, score);
@@ -36,9 +33,11 @@ Game::Game(sf::RenderWindow &window, int checkpoint)
 
 void Game::process()
 {
-    // Timer timerFPS;
-    // timerFPS.autoRestart = true;
-    // timerFPS.setDuration(sf::milliseconds(500));
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
+    {
+        stopTimers();
+        onEscPressed();
+    }
 
     while (const std::optional event = window.pollEvent())
     {
@@ -46,7 +45,7 @@ void Game::process()
             window.close();
 
         if (const auto *textEvent = event->getIf<sf::Event::TextEntered>())
-        {
+        {   
             char enteredChar = static_cast<char>(textEvent->unicode);
 
             for (auto &circle : circles)
@@ -56,28 +55,31 @@ void Game::process()
         }
     }
 
-    ui.bar.updateWidth(waveTimer.getLeftTime().asSeconds());
+    if (waveBegin)
+        ui.bar.updateWidth(waveTimer.getLeftTime().asSeconds());
 
-    if (circleSpawnTimer.timeout() && waveBegin)
+    if (waveBegin && circleSpawnTimer.timeout())
     {
         spawnCircle();
     }
-    if (waveTimer.timeout())
+    if (waveBegin && waveTimer.timeout())
     {
         waveFinish();
     }
-    if (pauseAfterWaveTimer.timeout())
+    if (!waveBegin && pauseAfterWaveTimer.timeout())
     {
         pauseAfterWaveTimer.getClock().reset();
         circles.clear();
-        ui.resetAnimState();
         updateDifficulty();
+        
+        waveTimer.getClock().restart();
         waveBegin = true;
     }
 
     window.clear(backgroundColor);
 
     float dt = globalClock.restart().asSeconds();
+    if (dt > 0.1f) dt = 1.0f / 60.0f;
 
     for (auto &circle : circles)
     {
@@ -95,15 +97,9 @@ void Game::process()
 
     ui.render();
 
-    if (!waveBegin)
-        ui.renderNextWaveAnim(dt);
+    ui.renderNextWaveAnim(dt);
 
     window.display();
-
-    // if (timerFPS.timeout())
-    // {
-    //     printf("%f ", 1.f / dt);
-    // }
 }
 
 void Game::waveFinish()
@@ -118,7 +114,8 @@ void Game::waveFinish()
     blowUpCircles();
 
     waveBegin = false;
-    pauseAfterWaveTimer.getClock().start();
+    ui.resetAnimState();
+    pauseAfterWaveTimer.getClock().restart();
 }
 
 void Game::updateDifficulty()
@@ -227,6 +224,16 @@ std::string Game::getWordForCircle()
     return "?";
 }
 
+void Game::skipWaves(int count)
+{
+    for (int i = 0; i < count; i++)
+    {
+        currentWave++;
+        updateDifficulty();
+    }
+    waveBegin = true;
+}
+
 void Game::blowUpCircles()
 {
     for (auto &circle : circles)
@@ -263,6 +270,28 @@ void Game::initWords()
     std::ifstream uniqueWordsFile(uniqueWordsPath);
     while (uniqueWordsFile >> word)
         uniqueWords.push_back(word);
+}
+
+void Game::startTimers()
+{   
+    while (window.pollEvent()); // clear buffer
+    
+    circleSpawnTimer.getClock().start();
+    waveTimer.getClock().start();
+    pauseAfterWaveTimer.getClock().start();
+    globalClock.restart();
+
+    stopInput = false;
+}
+
+void Game::stopTimers()
+{
+    circleSpawnTimer.getClock().stop();
+    waveTimer.getClock().stop();
+    pauseAfterWaveTimer.getClock().stop();
+    globalClock.stop();
+
+    stopInput = true;
 }
 
 int Game::getRandomValue(int min, int max)

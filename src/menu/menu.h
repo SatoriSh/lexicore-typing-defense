@@ -1,6 +1,9 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <string>
 #include <functional>
 
@@ -11,14 +14,15 @@ class Menu
     ~Menu();
 
     void render(sf::RenderWindow &window);
+    void pauseRender(sf::RenderWindow &window);
     std::function<void(std::string button)> onButtonClicked;
-
   private:
     const std::string fontPath = "../src/font/SansSerifFLF-DemiItalic.otf";
     const unsigned int screenWidth;
     const unsigned int screenHeight;
 
     bool buttonClicked = false;
+    bool pause = false;
 
     void inputHandler();
 
@@ -26,4 +30,7 @@ class Menu
     sf::Text startText;
     sf::Text continueText;
     sf::Text exitText;
+
+    sf::Text pauseContinueText;
+    sf::Text pauseOpenMenuText;
 };
