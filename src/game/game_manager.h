@@ -34,7 +34,7 @@ private:
     const std::string uniqueWordsPath = "../src/words/.unique_words.txt";
     const int pauseAfterWave = 3;
     const sf::Time timeToSpawnCircleIfUniqueWave = sf::milliseconds(450);
-    const sf::Time minTimeToSpawnCircle = sf::milliseconds(800);
+    const sf::Time minTimeToSpawnCircle = sf::milliseconds(900);
     const sf::Time maxTimeToSpawnCircle = sf::milliseconds(2000);
     const sf::Time circleSpawnDurationDecrease = sf::milliseconds(80);
 
@@ -65,12 +65,13 @@ private:
     std::vector<std::string> uniqueWords;
 
     void initWords();
-    std::string getWordForCircle();
     void spawnCircle();
     void checkCollisions();
     void addScore(int v);
     void waveFinish();
     void blowUpCircles();
     void updateDifficulty();
+
+    std::string getWordForCircle();
     int getRandomValue(int min, int max);
 };
