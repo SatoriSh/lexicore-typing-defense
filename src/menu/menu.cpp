@@ -17,7 +17,7 @@ Menu::Menu(const unsigned int screenWidth, const unsigned int screenHeight)
     exitText.setCharacterSize(64);
 
     startText.setString("[S]    Start");
-    continueText.setString("[C]    Continue last checkpoint");
+    continueText.setString("[C]    Continue from the checkpoint");
     exitText.setString("[E]     Exit");
 
     startText.setFillColor({0,0,255});

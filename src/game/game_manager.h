@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <SFML/System/Time.hpp>
 #include <string>
 #include <vector>
 #include <memory>
@@ -17,21 +18,22 @@
 class Game
 {
 public:
-    Game(sf::RenderWindow& window);
+    Game(sf::RenderWindow& window, int checkpoint);
     ~Game();
 
     void process();
 private:
     const std::string gameName = "LexiCore";
     const sf::Color backgroundColor = { 0, 0, 0 };
-    const int screenWidth;  ///////////////////////////////////////////////////////////////////
-    const int screenHeight; ///////////////////////////////////////////////////////////////////
+    const unsigned int screenWidth;
+    const unsigned int screenHeight;
     const sf::Vector2f heartPosition;
     const std::string simpleWordsPath = "../src/words/.simple_words.txt";
     const std::string mediumWordsPath = "../src/words/.medium_words.txt";
     const std::string hardWordsPath = "../src/words/.hard_words.txt";
     const std::string uniqueWordsPath = "../src/words/.unique_words.txt";
-    const int pauseAfterWave = 3; /////////////////////////////////////////////////////////////////////////////////////////////////////
+    const std::string dataPath = "../src/data/.checkpoint.txt";
+    const sf::Time pauseAfterWave = sf::seconds(3);
     const sf::Time timeToSpawnCircleIfUniqueWave = sf::milliseconds(450);
     const sf::Time minTimeToSpawnCircle = sf::milliseconds(900);
     const sf::Time maxTimeToSpawnCircle = sf::milliseconds(2000);
@@ -46,7 +48,7 @@ private:
     int score = 0;
     int currentWave = 1;
 
-    int waveDuration = 10;
+    int waveDuration = 6;
     bool waveBegin = true;
     bool uniqueWave = false;
 
@@ -70,6 +72,7 @@ private:
     void waveFinish();
     void blowUpCircles();
     void updateDifficulty();
+    void saveCheckpoint();
 
     std::string getWordForCircle();
     int getRandomValue(int min, int max);

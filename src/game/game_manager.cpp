@@ -2,7 +2,7 @@
 
 #include <fstream>
 
-Game::Game(sf::RenderWindow &window)
+Game::Game(sf::RenderWindow &window, int checkpoint)
     : window(window),
       screenWidth(window.getSize().x), screenHeight(window.getSize().y),
       heartPosition({(float)screenWidth / 2, (float)screenHeight / 2}),
@@ -15,13 +15,22 @@ Game::Game(sf::RenderWindow &window)
     waveTimer.autoRestart = true;
     waveTimer.setDuration(sf::seconds(waveDuration));
 
-    pauseAfterWaveTimer.setDuration(sf::seconds(pauseAfterWave));
+    pauseAfterWaveTimer.setDuration(pauseAfterWave);
     pauseAfterWaveTimer.autoRestart = false;
     pauseAfterWaveTimer.getClock().stop();
 
     ui.bar.setMaxWidth(waveDuration);
     ui.bar.setPosition({(float)screenWidth / 2 - ui.bar.backgroundBar.getLocalBounds().size.x / 2, 30});
 
+    if (checkpoint > 1)
+    {
+        for (int i = 0; i < checkpoint; i++)
+        {
+            waveFinish();
+        }
+    }
+
+    ui.updateHUD(currentWave, score);
     initWords();
 }
 
@@ -99,13 +108,11 @@ void Game::process()
 
 void Game::waveFinish()
 {
+    if (uniqueWave)
+        saveCheckpoint();
+
     currentWave++;
     uniqueWave = currentWave % 5 == 0 ? true : false;
-
-    if (uniqueWave)
-    {
-        // save in file
-    }
 
     ui.updateHUD(currentWave, score);
     blowUpCircles();
@@ -175,6 +182,29 @@ void Game::checkCollisions()
             circle->explode();
             heart.takeDamage();
         }
+    }
+}
+
+void Game::saveCheckpoint()
+{
+    int checkpoint = 0;
+    int dataCheckpoint = 0;
+
+    std::fstream dataFile(dataPath);
+
+    if (dataFile.is_open())
+    {
+        dataFile >> checkpoint;
+    }
+
+    if (currentWave < checkpoint)
+        return;
+
+    std::ofstream file(dataPath, std::ios::trunc);
+
+    if (file.is_open()) {
+        file << currentWave;
+        file.close();
     }
 }
 

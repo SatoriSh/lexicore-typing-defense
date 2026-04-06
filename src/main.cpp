@@ -2,6 +2,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/VideoMode.hpp>
+#include <fstream>
+
 #include "menu/menu.h"
 #include "game/game_manager.h"
 
@@ -31,12 +33,19 @@ int main()
     {
         if (button == "start")
         {
-            game = std::make_unique<Game>(window);
+            game = std::make_unique<Game>(window, 1); 
             gameState = State::GAME;
         }
         else if (button == "continue")
         {
-            game = std::make_unique<Game>(window);
+            int wave = 1;
+            std::ifstream file("../src/data/.checkpoint.txt");
+            if (file.is_open()) {
+                file >> wave;
+                file.close();
+            }
+
+            game = std::make_unique<Game>(window, wave);
             gameState = State::GAME;
         }
         else if (button == "exit")
