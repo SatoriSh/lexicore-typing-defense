@@ -53,7 +53,7 @@ private:
     int score = 0;
     int currentWave = 1;
 
-    int waveDuration = 6;
+    int waveDuration = 30;
     bool waveBegin = true;
     bool uniqueWave = false;
     bool stopInput = false;

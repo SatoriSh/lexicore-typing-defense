@@ -1,6 +1,10 @@
-house phone water bread light night dream smile
-happy friend garden summer winter spring autumn school
-family mother father brother sister doctor teacher driver
-clean fresh strong quick brown black white green small
-large round sharp soft hard early late happy sad
-angry funny quiet loud fast slow high low
+door room wall desk chair lamp book pen
+paper note card list form name time week
+month year hour minute second morning night
+walk talk look hear find give take make
+play work help keep show turn start stop
+open close read write sing draw clean cook
+black white green blue brown pink gray dark
+light soft hard warm cold fast slow high low
+near far left right same different early late
+happy sad angry calm kind mean cool warm
