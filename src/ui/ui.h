@@ -1,6 +1,8 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <string>
 
 class UI
@@ -13,6 +15,7 @@ public:
 
     void render();
     void renderNextWaveAnim(float dt);
+    void renderGameOverAnim(float dt);
     void resetAnimState();
 
     struct Bar
@@ -43,10 +46,14 @@ private:
     const unsigned int screenWidth;
     const unsigned int screenHeight;
     const std::string fontPath = "../src/font/SansSerifFLF-DemiItalic.otf";
-    const float textCharacterSize = 35.0f;
+    const unsigned int scoreTextFontSize = 35;
+    const unsigned int waveTextFontSize = 35;
+    const unsigned int nextWaveAnimTextFontSize = 100;
+    const unsigned int gameOverTextFontSize = 50;
+    const std::string gameOverTextString = "         GAME OVER\n\n[M]    Return to the menu";
     const sf::Color textColor = {170, 150, 255};
     const sf::Vector2f currentWaveTextPos = { 30, 30 };
-    const sf::Vector2f scoreTextPos = { 30, 75 };
+    const sf::Vector2f scoreTextPos = {30, 75};
     const float transparencyChangingSpeed = 180.0f;
 
     sf::RenderWindow& window;
@@ -54,12 +61,17 @@ private:
     int currentWave = 1;
     int score = 0;
 
-    float transparency = 0.0f;
+    sf::RectangleShape rectangle;
+
+    float nextWaveAnimTextTransparency = 0.0f;
+    float gameOverScreenTransparency = 0.0f;
     bool isNextWaveAnimFadeIn = true;
     bool isNextWaveAnimFinish = false;
+    sf::Vector2f gameOverTextPos;
 
     sf::Font font;
     sf::Text currentWaveText;
     sf::Text scoreText;
     sf::Text nextWaveAnimText;
+    sf::Text gameOverText;
 };

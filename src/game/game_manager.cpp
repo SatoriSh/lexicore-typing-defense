@@ -9,6 +9,8 @@ Game::Game(sf::RenderWindow &window, int checkpoint)
       heart(heartPosition),
       ui(screenWidth, screenHeight, window), gen(rd())
 {
+    heart.onDead = [this]() { gameOver = true; };
+
     circleSpawnTimer.autoRestart = true;
     circleSpawnTimer.setDuration(timeToSpawnCircle);
 
@@ -33,11 +35,8 @@ Game::Game(sf::RenderWindow &window, int checkpoint)
 
 void Game::process()
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
-    {
-        stopTimers();
-        onEscPressed();
-    }
+    float dt = globalClock.restart().asSeconds();
+    if (dt > 0.1f) dt = 1.0f / 60.0f;
 
     while (const std::optional event = window.pollEvent())
     {
@@ -55,49 +54,67 @@ void Game::process()
         }
     }
 
-    if (waveBegin)
-        ui.bar.updateWidth(waveTimer.getLeftTime().asSeconds());
+    if (!gameOver)
+    {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
+        {
+            stopTimers();
+            onEscPressed();
+        }
 
-    if (waveBegin && circleSpawnTimer.timeout())
-    {
-        spawnCircle();
+        if (waveBegin)
+            ui.bar.updateWidth(waveTimer.getLeftTime().asSeconds());
+
+        if (waveBegin && circleSpawnTimer.timeout())
+        {
+            spawnCircle();
+        }
+        if (waveBegin && waveTimer.timeout())
+        {
+            waveFinish();
+        }
+        if (!waveBegin && pauseAfterWaveTimer.timeout())
+        {
+            pauseAfterWaveTimer.getClock().reset();
+            circles.clear();
+            updateDifficulty();
+            
+            waveTimer.getClock().restart();
+            waveBegin = true;
+        }
+
+        for (auto &circle : circles)
+        {
+            if (!circle->isDestroyed)
+            {
+                circle->update(dt);
+            }
+        }
+
+        checkCollisions();
     }
-    if (waveBegin && waveTimer.timeout())
+    else
     {
-        waveFinish();
-    }
-    if (!waveBegin && pauseAfterWaveTimer.timeout())
-    {
-        pauseAfterWaveTimer.getClock().reset();
-        circles.clear();
-        updateDifficulty();
-        
-        waveTimer.getClock().restart();
-        waveBegin = true;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::M))
+            onMenuPressed();
     }
 
     window.clear(backgroundColor);
 
-    float dt = globalClock.restart().asSeconds();
-    if (dt > 0.1f) dt = 1.0f / 60.0f;
-
     for (auto &circle : circles)
     {
-        if (!circle->isDestroyed)
-        {
-            circle->update(dt);
-            window.draw(circle->circleShape);
-            circle->dynText.render(window);
-        }
+        window.draw(circle->circleShape);
+        circle->dynText.render(window);
     }
-
-    checkCollisions();
 
     window.draw(heart.sprite);
 
     ui.render();
 
     ui.renderNextWaveAnim(dt);
+
+    if (gameOver)
+        ui.renderGameOverAnim(dt);
 
     window.display();
 }

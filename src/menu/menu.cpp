@@ -19,16 +19,16 @@ Menu::Menu(const unsigned int screenWidth, const unsigned int screenHeight)
     continueText.setCharacterSize(fontSize);
     exitText.setCharacterSize(fontSize);
 
-    startText.setString("[S]    Start");
-    continueText.setString("[C]    Continue from the checkpoint");
-    exitText.setString("[E]     Exit");
+    startText.setString("  [S]                Start              ");
+    continueText.setString("    [C]    Continue from checkpoint");
+    exitText.setString(" [E]                 Exit               ");
 
     startText.setFillColor(textColor);
     continueText.setFillColor(textColor);
     exitText.setFillColor(textColor);
 
     float offsetY = startText.getLocalBounds().size.y + continueText.getLocalBounds().size.y + exitText.getLocalBounds().size.y;
-    float startY = (float)screenHeight / 4 + offsetY / 2;
+    float startY = (float)screenHeight / 2 - offsetY;
 
     startText.setPosition({(float)screenWidth / 2 - startText.getLocalBounds().size.x / 2, startY});
 
@@ -44,14 +44,14 @@ Menu::Menu(const unsigned int screenWidth, const unsigned int screenHeight)
     pauseContinueText.setCharacterSize(fontSize);
     pauseOpenMenuText.setCharacterSize(fontSize);
 
-    pauseContinueText.setString("[C]    Continue");
-    pauseOpenMenuText.setString("[M]    Open Menu");
+    pauseContinueText.setString("[C]    Continue  ");
+    pauseOpenMenuText.setString("[M]    Menu      ");
 
     pauseContinueText.setFillColor(textColor);
     pauseOpenMenuText.setFillColor(textColor);
 
     offsetY = pauseContinueText.getLocalBounds().size.y + pauseOpenMenuText.getLocalBounds().size.y;
-    startY = (float)screenHeight / 4 + offsetY;
+    startY = (float)screenHeight / 2 - offsetY;
 
     pauseContinueText.setPosition({(float)screenWidth / 2 - pauseContinueText.getLocalBounds().size.x / 2, startY});
 

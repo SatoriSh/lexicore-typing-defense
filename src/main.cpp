@@ -22,10 +22,8 @@ void initGame(sf::RenderWindow& window, int wave)
 {
     game = std::make_unique<Game>(window, wave);
 
-    game->onEscPressed = [&]()
-    {
-        gameState = State::PAUSE;
-    };
+    game->onEscPressed = [&]() { gameState = State::PAUSE; };
+    game->onMenuPressed = [&]() { gameState = State::MENU; };
 }
 
 int main()
@@ -87,6 +85,8 @@ int main()
             break;
         }
     }
+
+    game.reset();
 
     return 0;
 }

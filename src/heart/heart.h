@@ -1,12 +1,15 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <functional>
 
 class Heart
 {
 public:
     Heart(sf::Vector2f position);
     ~Heart();
+
+    std::function<void()> onDead;
 
     void takeDamage();
     void addLife();

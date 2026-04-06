@@ -37,6 +37,9 @@ void Heart::takeDamage()
 {
     health = health - 1 <= 0 ? 0 : --health;
     sprite.setTextureRect(heartRects[health]);
+
+    if (health == 0)
+        onDead();
 }
 
 Heart::~Heart()

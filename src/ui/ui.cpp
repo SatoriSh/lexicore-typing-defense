@@ -1,4 +1,6 @@
 #include "ui.h"
+#include <SFML/Graphics/Color.hpp>
+#include <cstdint>
 #include <string>
 
 UI::UI(const unsigned int screenWidth, const unsigned int screenHeight, sf::RenderWindow& window)
@@ -8,25 +10,36 @@ UI::UI(const unsigned int screenWidth, const unsigned int screenHeight, sf::Rend
     window(window),
     currentWaveText(font, ""),
     scoreText(font, ""),
-    nextWaveAnimText(font, "")
+    nextWaveAnimText(font, ""),
+    gameOverText(font, "")
 {
     if (!font.openFromFile(fontPath))
         printf("font opening error");
 
     currentWaveText.setFont(font);
-    currentWaveText.setCharacterSize(textCharacterSize);
+    currentWaveText.setCharacterSize(waveTextFontSize);
     currentWaveText.setFillColor(textColor);
     currentWaveText.setPosition(currentWaveTextPos);
 
     scoreText.setFont(font);
-    scoreText.setCharacterSize(textCharacterSize);
+    scoreText.setCharacterSize(scoreTextFontSize);
     scoreText.setFillColor(textColor);
     scoreText.setPosition(scoreTextPos);
 
     nextWaveAnimText.setFont(font);
-    nextWaveAnimText.setCharacterSize(100);
+    nextWaveAnimText.setCharacterSize(nextWaveAnimTextFontSize);
 
     updateHUD(currentWave, score);
+
+    rectangle.setSize({(float)screenWidth, (float)screenHeight});
+    rectangle.setOrigin({rectangle.getLocalBounds().size.x / 2, rectangle.getLocalBounds().size.y / 2});
+    rectangle.setPosition({(float)screenWidth / 2, (float)screenHeight / 2});
+
+    gameOverText.setFont(font);
+    gameOverText.setCharacterSize(gameOverTextFontSize);
+    gameOverText.setString(gameOverTextString);
+    gameOverTextPos = {(float)screenWidth / 2 - gameOverText.getLocalBounds().size.x / 2, (float)screenHeight / 2 - gameOverText.getLocalBounds().size.y / 1.8f};
+    gameOverText.setPosition(gameOverTextPos);
 }
 
 void UI::render()
@@ -47,27 +60,43 @@ void UI::renderNextWaveAnim(float dt)
 
     if (isNextWaveAnimFadeIn)
     {
-        transparency += transparencyChangingSpeed * dt;
-        if (transparency > 255)
+        nextWaveAnimTextTransparency += transparencyChangingSpeed * dt;
+        if (nextWaveAnimTextTransparency > 255)
         {
-            transparency = 255;
+            nextWaveAnimTextTransparency = 255;
             isNextWaveAnimFadeIn = false;
         }
     }
     else
     {
-        transparency -= transparencyChangingSpeed * dt;
-        if (transparency < 0)
+        nextWaveAnimTextTransparency -= transparencyChangingSpeed * dt;
+        if (nextWaveAnimTextTransparency < 0)
         {
-            transparency = 0;
+            nextWaveAnimTextTransparency = 0;
             isNextWaveAnimFadeIn = true;
             isNextWaveAnimFinish = true;
         }
     }
 
-    nextWaveAnimText.setFillColor(sf::Color{ 255, 190, 40, (uint8_t)transparency });
+    nextWaveAnimText.setFillColor(sf::Color{ 255, 190, 40, (uint8_t)nextWaveAnimTextTransparency });
 
     window.draw(nextWaveAnimText);
+}
+
+void UI::renderGameOverAnim(float dt)
+{
+    gameOverScreenTransparency += transparencyChangingSpeed * dt;
+    if (gameOverScreenTransparency > 255)
+        gameOverScreenTransparency = 255;
+
+    sf::Color rectangleColor = {0, 0, 0, (uint8_t)gameOverScreenTransparency};
+    sf::Color gameOverTextColor = {255,0,0, (uint8_t)gameOverScreenTransparency};
+
+    rectangle.setFillColor(rectangleColor);
+    gameOverText.setFillColor(gameOverTextColor);
+
+    window.draw(rectangle);
+    window.draw(gameOverText);
 }
 
 void UI::updateHUD(int currentWave, int score)
@@ -86,7 +115,7 @@ void UI::resetAnimState()
 {
     isNextWaveAnimFinish = false; 
     isNextWaveAnimFadeIn = true; 
-    transparency = 0.0f;
+    nextWaveAnimTextTransparency = 0.0f;
 };
 
 UI::~UI()

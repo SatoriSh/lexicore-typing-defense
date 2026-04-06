@@ -23,6 +23,8 @@ public:
     ~Game();
 
     std::function<void()> onEscPressed;
+    std::function<void()> onMenuPressed;
+
     void startTimers();
     void stopTimers();
 
@@ -57,6 +59,7 @@ private:
     bool waveBegin = true;
     bool uniqueWave = false;
     bool stopInput = false;
+    bool gameOver = false;
 
     sf::Clock globalClock;
     Timer circleSpawnTimer;
