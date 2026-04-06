@@ -9,6 +9,8 @@ public:
     ~Heart();
 
     void takeDamage();
+    void addLife();
+    void fullHeal();
 
     sf::Sprite sprite;
 private:

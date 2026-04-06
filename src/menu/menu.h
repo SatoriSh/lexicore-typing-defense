@@ -19,6 +19,7 @@ class Menu
 
   private:
     const std::string fontPath = "../src/font/SansSerifFLF-DemiItalic.otf";
+    const unsigned int fontSize = 64;
     const unsigned int screenWidth;
     const unsigned int screenHeight;
     const sf::Color textColor = {170, 150, 255};

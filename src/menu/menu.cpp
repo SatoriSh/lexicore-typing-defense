@@ -15,9 +15,9 @@ Menu::Menu(const unsigned int screenWidth, const unsigned int screenHeight)
     continueText.setFont(font);
     exitText.setFont(font);
 
-    startText.setCharacterSize(64);
-    continueText.setCharacterSize(64);
-    exitText.setCharacterSize(64);
+    startText.setCharacterSize(fontSize);
+    continueText.setCharacterSize(fontSize);
+    exitText.setCharacterSize(fontSize);
 
     startText.setString("[S]    Start");
     continueText.setString("[C]    Continue from the checkpoint");
@@ -41,8 +41,8 @@ Menu::Menu(const unsigned int screenWidth, const unsigned int screenHeight)
     pauseContinueText.setFont(font);
     pauseOpenMenuText.setFont(font);
 
-    pauseContinueText.setCharacterSize(64);
-    pauseOpenMenuText.setCharacterSize(64);
+    pauseContinueText.setCharacterSize(fontSize);
+    pauseOpenMenuText.setCharacterSize(fontSize);
 
     pauseContinueText.setString("[C]    Continue");
     pauseOpenMenuText.setString("[M]    Open Menu");

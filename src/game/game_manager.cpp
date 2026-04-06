@@ -105,7 +105,10 @@ void Game::process()
 void Game::waveFinish()
 {
     if (uniqueWave)
+    {
         saveCheckpoint();
+        heart.fullHeal();
+    }
 
     currentWave++;
     uniqueWave = currentWave % 5 == 0 ? true : false;

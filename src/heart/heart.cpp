@@ -20,6 +20,19 @@ Heart::Heart(sf::Vector2f position)
     sprite.setPosition(position);
 }
 
+void Heart::addLife()
+{
+    health += 1;
+    if (health > maxHealth) health = maxHealth;
+    sprite.setTextureRect(heartRects[health]);
+}
+
+void Heart::fullHeal()
+{
+    health = maxHealth;
+    sprite.setTextureRect(heartRects[health]);
+}
+
 void Heart::takeDamage()
 {
     health = health - 1 <= 0 ? 0 : --health;
