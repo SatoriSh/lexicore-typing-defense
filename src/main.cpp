@@ -5,6 +5,14 @@
 #include "menu/menu.h"
 #include "game/game_manager.h"
 
+enum State
+{
+    MENU,
+    GAME
+};
+
+State gameState = State::MENU;
+
 int main()
 {
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
@@ -15,11 +23,38 @@ int main()
     sf::RenderWindow window(sf::VideoMode({screenWidth, screenHeight}), "LexiCore", sf::Style::None);
     window.setFramerateLimit(FPS);
 
-    Menu menu(screenWidth, screenHeight);
-    menu.render(window);
+    std::unique_ptr<Game> game = nullptr;
 
-    Game game(window);
-    game.process();
+    Menu menu(screenWidth, screenHeight);
+
+    menu.onButtonClicked = [&](std::string button)
+    {
+        if (button == "start")
+        {
+            game = std::make_unique<Game>(window);
+            gameState = State::GAME;
+        }
+        else if (button == "continue")
+        {
+            game = std::make_unique<Game>(window);
+            gameState = State::GAME;
+        }
+        else if (button == "exit")
+            window.close();
+    };
+
+    while (window.isOpen())
+    {
+        switch (gameState)
+        {
+        case State::MENU:
+            menu.render(window);
+            break;
+        case State::GAME:
+            game->process();
+            break;
+        }
+    }
 
     return 0;
 }

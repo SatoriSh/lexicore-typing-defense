@@ -31,74 +31,70 @@ void Game::process()
     // timerFPS.autoRestart = true;
     // timerFPS.setDuration(sf::milliseconds(500));
 
-    while (window.isOpen() &&
-           !sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
+    while (const std::optional event = window.pollEvent())
     {
-        while (const std::optional event = window.pollEvent())
+        if (event->is<sf::Event::Closed>())
+            window.close();
+
+        if (const auto *textEvent = event->getIf<sf::Event::TextEntered>())
         {
-            if (event->is<sf::Event::Closed>())
-                window.close();
+            char enteredChar = static_cast<char>(textEvent->unicode);
 
-            if (const auto *textEvent = event->getIf<sf::Event::TextEntered>())
+            for (auto &circle : circles)
             {
-                char enteredChar = static_cast<char>(textEvent->unicode);
-
-                for (auto &circle : circles)
-                {
-                    circle->dynText.inputHandler(enteredChar);
-                }
+                circle->dynText.inputHandler(enteredChar);
             }
         }
-
-        ui.bar.updateWidth(waveTimer.getLeftTime().asSeconds());
-
-        if (circleSpawnTimer.timeout() && waveBegin)
-        {
-            spawnCircle();
-        }
-        if (waveTimer.timeout())
-        {
-            waveFinish();
-        }
-        if (pauseAfterWaveTimer.timeout())
-        {
-            pauseAfterWaveTimer.getClock().reset();
-            circles.clear();
-            ui.resetAnimState();
-            updateDifficulty();
-            waveBegin = true;
-        }
-
-        window.clear(backgroundColor);
-
-        float dt = globalClock.restart().asSeconds();
-
-        for (auto &circle : circles)
-        {
-            if (!circle->isDestroyed)
-            {
-                circle->update(dt);
-                window.draw(circle->circleShape);
-                circle->dynText.render(window);
-            }
-        }
-
-        checkCollisions();
-
-        window.draw(heart.sprite);
-
-        ui.render();
-
-        if (!waveBegin)
-            ui.renderNextWaveAnim(dt);
-
-        window.display();
-
-        // if (timerFPS.timeout())
-        // {
-        //     printf("%f ", 1.f / dt);
-        // }
     }
+
+    ui.bar.updateWidth(waveTimer.getLeftTime().asSeconds());
+
+    if (circleSpawnTimer.timeout() && waveBegin)
+    {
+        spawnCircle();
+    }
+    if (waveTimer.timeout())
+    {
+        waveFinish();
+    }
+    if (pauseAfterWaveTimer.timeout())
+    {
+        pauseAfterWaveTimer.getClock().reset();
+        circles.clear();
+        ui.resetAnimState();
+        updateDifficulty();
+        waveBegin = true;
+    }
+
+    window.clear(backgroundColor);
+
+    float dt = globalClock.restart().asSeconds();
+
+    for (auto &circle : circles)
+    {
+        if (!circle->isDestroyed)
+        {
+            circle->update(dt);
+            window.draw(circle->circleShape);
+            circle->dynText.render(window);
+        }
+    }
+
+    checkCollisions();
+
+    window.draw(heart.sprite);
+
+    ui.render();
+
+    if (!waveBegin)
+        ui.renderNextWaveAnim(dt);
+
+    window.display();
+
+    // if (timerFPS.timeout())
+    // {
+    //     printf("%f ", 1.f / dt);
+    // }
 }
 
 void Game::waveFinish()
@@ -159,8 +155,7 @@ void Game::spawnCircle()
     sf::Vector2f directionToHeart = heartPosition - spawnPosition;
     directionToHeart = directionToHeart.normalized();
 
-    std::unique_ptr<Circle> circle =
-        std::make_unique<Circle>(spawnPosition, directionToHeart, word);
+    std::unique_ptr<Circle> circle = std::make_unique<Circle>(spawnPosition, directionToHeart, word);
     circle->addScore = [this](int v) { addScore(v); };
 
     circles.push_back(std::move(circle));

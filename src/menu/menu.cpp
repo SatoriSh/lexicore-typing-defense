@@ -37,17 +37,34 @@ Menu::Menu(const unsigned int screenWidth, const unsigned int screenHeight)
 
 void Menu::render(sf::RenderWindow& window)
 {
-    while (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::C) ||
-           !sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E) ||
-           !sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+    while (!buttonClicked)
     {
-        window.clear({0,0,0});
+        inputHandler();
 
+        window.clear({0,0,0});
         window.draw(startText);
         window.draw(continueText);
         window.draw(exitText);
-
         window.display();
+    }
+}
+
+void Menu::inputHandler()
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+    {
+        onButtonClicked("start");
+        buttonClicked = true;
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::C))
+    {
+        onButtonClicked("continue");
+        buttonClicked = true;
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E))
+    {
+        onButtonClicked("exit");
+        buttonClicked = true;
     }
 }
 
