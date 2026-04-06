@@ -1,4 +1,5 @@
 #include "ui.h"
+#include <string>
 
 UI::UI(const unsigned int screenWidth, const unsigned int screenHeight, sf::RenderWindow& window)
     :
@@ -76,7 +77,9 @@ void UI::updateHUD(int currentWave, int score)
 
     currentWaveText.setString(std::string("Wave: " + std::to_string(currentWave)));
     scoreText.setString(std::string("Score: ") + std::to_string(score));
-    nextWaveAnimText.setString(std::string("Wave " + std::to_string(currentWave)));
+
+    std::string checkpoint = currentWave % 5 == 0 ? " (checkpoint)" : "";
+    nextWaveAnimText.setString(std::string("Wave " + std::to_string(currentWave) + checkpoint));
 }
 
 void UI::resetAnimState() { isNextWaveAnimFinish = false; };

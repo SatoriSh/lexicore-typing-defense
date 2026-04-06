@@ -17,28 +17,27 @@
 class Game
 {
 public:
-    Game(const unsigned int screenWidth, const unsigned int screenHeight);
+    Game(sf::RenderWindow& window);
     ~Game();
 
     void process();
 private:
-    const unsigned int FPS = 60;
     const std::string gameName = "LexiCore";
     const sf::Color backgroundColor = { 0, 0, 0 };
-    const int screenWidth;
-    const int screenHeight;
+    const int screenWidth;  ///////////////////////////////////////////////////////////////////
+    const int screenHeight; ///////////////////////////////////////////////////////////////////
     const sf::Vector2f heartPosition;
     const std::string simpleWordsPath = "../src/words/.simple_words.txt";
     const std::string mediumWordsPath = "../src/words/.medium_words.txt";
     const std::string hardWordsPath = "../src/words/.hard_words.txt";
     const std::string uniqueWordsPath = "../src/words/.unique_words.txt";
-    const int pauseAfterWave = 3;
+    const int pauseAfterWave = 3; /////////////////////////////////////////////////////////////////////////////////////////////////////
     const sf::Time timeToSpawnCircleIfUniqueWave = sf::milliseconds(450);
     const sf::Time minTimeToSpawnCircle = sf::milliseconds(900);
     const sf::Time maxTimeToSpawnCircle = sf::milliseconds(2000);
     const sf::Time circleSpawnDurationDecrease = sf::milliseconds(80);
 
-    sf::RenderWindow window;
+    sf::RenderWindow& window;
     UI ui;
 
     Heart heart;
@@ -47,7 +46,7 @@ private:
     int score = 0;
     int currentWave = 1;
 
-    int waveDuration = 30;
+    int waveDuration = 10;
     bool waveBegin = true;
     bool uniqueWave = false;
 
