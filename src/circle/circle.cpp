@@ -19,6 +19,8 @@ Circle::Circle(sf::Vector2f position, const sf::Vector2f directionToHeart, std::
         };
 
     radius = dynText.getTotalWidth() / 1.3;
+    if (dynText.getLettersCount() == 1)
+        radius *= 2;
 
     speed -= dynText.getTotalWidth() * 2;
     if (speed < minSpeed) speed = minSpeed;

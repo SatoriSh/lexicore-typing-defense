@@ -1,10 +1,12 @@
-door room wall desk chair lamp book pen
-paper note card list form name time week
-month year hour minute second morning night
-walk talk look hear find give take make
-play work help keep show turn start stop
-open close read write sing draw clean cook
-black white green blue brown pink gray dark
-light soft hard warm cold fast slow high low
-near far left right same different early late
-happy sad angry calm kind mean cool warm
+door room wall desk chair lamp book pen paper
+note card list form name time week month year
+hour minute second morning night walk talk look
+hear find give take make play work help keep
+show turn start stop open close read write sing
+draw clean cook black white green blue brown pink
+gray dark light soft hard warm cold fast slow
+high low near far left right same different
+early late happy sad angry calm kind mean cool warm
+cat dog sun car bus red blue big small hot cold
+yes no boy girl day night sit see hand foot tree
+bird fish book work

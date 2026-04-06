@@ -40,9 +40,9 @@ private:
     const std::string dataPath = "../src/data/.checkpoint.txt";
     const sf::Time pauseAfterWave = sf::seconds(3);
     const sf::Time timeToSpawnCircleIfUniqueWave = sf::milliseconds(450);
-    const sf::Time minTimeToSpawnCircle = sf::milliseconds(900);
+    const sf::Time minTimeToSpawnCircle = sf::milliseconds(1200);
     const sf::Time maxTimeToSpawnCircle = sf::milliseconds(2000);
-    const sf::Time circleSpawnDurationDecrease = sf::milliseconds(80);
+    const sf::Time circleSpawnDurationDecrease = sf::milliseconds(40);
 
     sf::RenderWindow& window;
     UI ui;

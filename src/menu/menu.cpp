@@ -27,14 +27,15 @@ Menu::Menu(const unsigned int screenWidth, const unsigned int screenHeight)
     continueText.setFillColor(textColor);
     exitText.setFillColor(textColor);
 
-    float startY = (float)screenHeight / 4;
+    float offsetY = startText.getLocalBounds().size.y + continueText.getLocalBounds().size.y + exitText.getLocalBounds().size.y;
+    float startY = (float)screenHeight / 4 + offsetY / 2;
 
     startText.setPosition({(float)screenWidth / 2 - startText.getLocalBounds().size.x / 2, startY});
 
-    startY += (float)screenHeight / 10;
+    startY += (float)screenHeight / 12;
     continueText.setPosition({(float)screenWidth / 2 - continueText.getLocalBounds().size.x / 2, startY});
 
-    startY += (float)screenHeight / 10;
+    startY += (float)screenHeight / 12;
     exitText.setPosition( {(float)screenWidth / 2 - exitText.getLocalBounds().size.x / 2, startY});
 
     pauseContinueText.setFont(font);
@@ -49,11 +50,12 @@ Menu::Menu(const unsigned int screenWidth, const unsigned int screenHeight)
     pauseContinueText.setFillColor(textColor);
     pauseOpenMenuText.setFillColor(textColor);
 
-    startY = (float)screenHeight / 4;
+    offsetY = pauseContinueText.getLocalBounds().size.y + pauseOpenMenuText.getLocalBounds().size.y;
+    startY = (float)screenHeight / 4 + offsetY;
 
     pauseContinueText.setPosition({(float)screenWidth / 2 - pauseContinueText.getLocalBounds().size.x / 2, startY});
 
-    startY += (float)screenHeight / 10;
+    startY += (float)screenHeight / 12;
     pauseOpenMenuText.setPosition( {(float)screenWidth / 2 - pauseOpenMenuText.getLocalBounds().size.x / 2, startY});
 }
 

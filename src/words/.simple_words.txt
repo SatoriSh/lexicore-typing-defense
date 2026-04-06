@@ -1,6 +1,5 @@
-cat dog sun car bus hat pen red blue
-big small run jump hot cold yes no one
-two six ten boy girl man woman day night
-eat sit stand walk talk look see hear hand
-foot head eye nose mouth tree flower bird
-fish book school home work
+cat dog sun car bus hat pen red blue big small
+run jump hot cold yes no one two six ten boy
+girl man woman day night eat sit stand walk
+talk look see hear hand foot head eye nose
+mouth tree flower bird fish book school home work
