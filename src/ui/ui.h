@@ -27,7 +27,11 @@ public:
 
         sf::RectangleShape backgroundBar;
         sf::RectangleShape fillBar;
-    private:
+
+      private:
+        const sf::Color backgroundBarOutlineColor = {70, 60, 110, 190};
+        const sf::Color backgroundBarFillColor = {70, 60, 110, 40};
+        const sf::Color fillBarColor = {200, 55, 75, 210};
         const float barHeight = 30;
         const int widthMultiplier = 5;
         float barWidth;
@@ -40,7 +44,7 @@ private:
     const unsigned int screenHeight;
     const std::string fontPath = "../src/font/SansSerifFLF-DemiItalic.otf";
     const float textCharacterSize = 35.0f;
-    const sf::Color textColor = sf::Color::Blue;
+    const sf::Color textColor = {170, 150, 255};
     const sf::Vector2f currentWaveTextPos = { 30, 30 };
     const sf::Vector2f scoreTextPos = { 30, 75 };
     const float transparencyChangingSpeed = 180.0f;

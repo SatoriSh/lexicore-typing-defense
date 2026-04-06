@@ -29,7 +29,7 @@ public:
     void process();
 private:
     const std::string gameName = "LexiCore";
-    const sf::Color backgroundColor = { 0, 0, 0 };
+    const sf::Color backgroundColor = {8, 6, 18} ;
     const unsigned int screenWidth;
     const unsigned int screenHeight;
     const sf::Vector2f heartPosition;

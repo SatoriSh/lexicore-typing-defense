@@ -65,7 +65,7 @@ void UI::renderNextWaveAnim(float dt)
         }
     }
 
-    nextWaveAnimText.setFillColor(sf::Color{ 255, 0, 0, (uint8_t)transparency });
+    nextWaveAnimText.setFillColor(sf::Color{ 255, 190, 40, (uint8_t)transparency });
 
     window.draw(nextWaveAnimText);
 }
@@ -97,13 +97,12 @@ UI::~UI()
 UI::Bar::Bar()
 {
     backgroundBar.setSize({ barWidth, barHeight });
-    backgroundBar.setFillColor(sf::Color(0, 255, 0, 0));
-    backgroundBar.setOutlineColor(sf::Color(0, 255, 0, 160));
+    backgroundBar.setFillColor(backgroundBarFillColor);
+    backgroundBar.setOutlineColor(backgroundBarOutlineColor);
     backgroundBar.setOutlineThickness(2.5f);
 
-
     fillBar.setSize({ barWidth, barHeight });
-    fillBar.setFillColor(sf::Color(255, 0, 0, 160));
+    fillBar.setFillColor(fillBarColor);
 }
 
 void UI::Bar::setMaxWidth(float v)

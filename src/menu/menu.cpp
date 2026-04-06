@@ -23,9 +23,9 @@ Menu::Menu(const unsigned int screenWidth, const unsigned int screenHeight)
     continueText.setString("[C]    Continue from the checkpoint");
     exitText.setString("[E]     Exit");
 
-    startText.setFillColor({0,0,255});
-    continueText.setFillColor({0,0,255});
-    exitText.setFillColor({0,0,255});
+    startText.setFillColor(textColor);
+    continueText.setFillColor(textColor);
+    exitText.setFillColor(textColor);
 
     float startY = (float)screenHeight / 4;
 
@@ -46,8 +46,8 @@ Menu::Menu(const unsigned int screenWidth, const unsigned int screenHeight)
     pauseContinueText.setString("[C]    Continue");
     pauseOpenMenuText.setString("[M]    Open Menu");
 
-    pauseContinueText.setFillColor({0,0,255});
-    pauseOpenMenuText.setFillColor({0, 0, 255});
+    pauseContinueText.setFillColor(textColor);
+    pauseOpenMenuText.setFillColor(textColor);
 
     startY = (float)screenHeight / 4;
 

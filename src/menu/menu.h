@@ -16,10 +16,12 @@ class Menu
     void render(sf::RenderWindow &window);
     void pauseRender(sf::RenderWindow &window);
     std::function<void(std::string button)> onButtonClicked;
+
   private:
     const std::string fontPath = "../src/font/SansSerifFLF-DemiItalic.otf";
     const unsigned int screenWidth;
     const unsigned int screenHeight;
+    const sf::Color textColor = {170, 150, 255};
 
     bool buttonClicked = false;
     bool pause = false;

@@ -1,4 +1,6 @@
 #include "circle.h"
+#include <SFML/Graphics/Color.hpp>
+#include <cstdint>
 
 Circle::Circle(sf::Vector2f position, const sf::Vector2f directionToHeart, std::string text)
     : dynText(text), directionToHeart(directionToHeart), position(position)
@@ -48,12 +50,9 @@ void Circle::update(float dt)
         transparency -= transparencyChangingSpeed * dt;
         if (transparency < 0.0f) transparency = 0.0f;
 
-        sf::Color explosionColor = sf::Color(
-            isHeartHitExplosion ? 255 : 0,
-            isHeartHitExplosion ? 0 : 255,
-            0,
-            transparency
-        );
+        sf::Color explosionColor = isHeartHitExplosion ?
+            sf::Color{255, 70, 40, (uint8_t)transparency} : 
+            sf::Color{50, 220, 180, (uint8_t)transparency};
 
         circleShape.setFillColor(explosionColor);
         circleShape.setOutlineColor(explosionColor);

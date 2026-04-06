@@ -25,8 +25,8 @@ public:
     bool isExplosionStarted();
 private:
     const sf::Vector2f directionToHeart;
-    const sf::Color fillColor = sf::Color(42, 42, 62);
-    const sf::Color outlineColor = sf::Color(90, 90, 138);
+    const sf::Color fillColor = {30, 25, 55};
+    const sf::Color outlineColor = {110, 85, 200};
     const float outlineThickness = 2.0f;
     const float explosionSpeed = 650.0f;
     const size_t pointCount = 200;

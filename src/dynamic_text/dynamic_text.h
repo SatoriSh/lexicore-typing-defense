@@ -22,8 +22,8 @@ public:
 private:
     const std::string fontPath = "../src/font/SansSerifFLF-DemiItalic.otf";
     const int fontSize = 30;
-    const sf::Color defaultColor = sf::Color(200, 200, 232);
-    const sf::Color pressedColor = sf::Color(255, 107, 107);
+    const sf::Color defaultColor = {210, 205, 245};
+    const sf::Color pressedColor = {0, 0, 255};
 
     sf::Font font;
     std::string text;
