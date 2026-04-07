@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/VideoMode.hpp>
@@ -37,6 +38,14 @@ int main()
     window.setFramerateLimit(FPS);
 
     Menu menu(screenWidth, screenHeight);
+
+    sf::Music music;
+    if (music.openFromFile("../src/sounds/music.mp3"))
+    {
+        music.setLooping(true);
+        music.setVolume(30.0f);
+        music.play();
+    }
 
     menu.onButtonClicked = [&](std::string button)
     {

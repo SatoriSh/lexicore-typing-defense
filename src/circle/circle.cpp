@@ -16,6 +16,7 @@ Circle::Circle(sf::Vector2f position, const sf::Vector2f directionToHeart, std::
         {
             addScore(dynText.getLettersCount() * scoreMultiplier);
             explode();
+            if (onExplodeSuccess) onExplodeSuccess();
         };
 
     radius = dynText.getTotalWidth() / 1.3;

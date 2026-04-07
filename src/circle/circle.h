@@ -19,6 +19,7 @@ public:
     bool isHeartHitExplosion = false;
 
     std::function<void(int)> addScore;
+    std::function<void()> onExplodeSuccess;
 
     void update(float dt);
     void explode();

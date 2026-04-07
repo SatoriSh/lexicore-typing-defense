@@ -7,9 +7,14 @@ Game::Game(sf::RenderWindow &window, int checkpoint)
       screenWidth(window.getSize().x), screenHeight(window.getSize().y),
       heartPosition({(float)screenWidth / 2, (float)screenHeight / 2}),
       heart(heartPosition),
-      ui(screenWidth, screenHeight, window), gen(rd())
+      ui(screenWidth, screenHeight, window), gen(rd()),
+      successSound(successBuffer), hitSound(hitBuffer),
+      waveSound(waveBuffer), gameOverSound(gameOverBuffer)
 {
-    heart.onDead = [this]() { gameOver = true; };
+    heart.onDead = [this]() {
+        gameOver = true;
+        gameOverSound.play();
+    };
 
     circleSpawnTimer.autoRestart = true;
     circleSpawnTimer.setDuration(timeToSpawnCircle);
@@ -23,6 +28,11 @@ Game::Game(sf::RenderWindow &window, int checkpoint)
 
     ui.bar.setMaxWidth(waveDuration);
     ui.bar.setPosition({(float)screenWidth / 2 - ui.bar.backgroundBar.getLocalBounds().size.x / 2, 30});
+
+    (void)successBuffer.loadFromFile(soundSuccessPath);
+    (void)hitBuffer.loadFromFile(soundHitPath);
+    (void)waveBuffer.loadFromFile(soundWavePath);
+    (void)gameOverBuffer.loadFromFile(soundGameOverPath);
 
     if (checkpoint > 1)
     {
@@ -121,6 +131,7 @@ void Game::process()
 
 void Game::waveFinish()
 {
+    waveSound.play();
     if (uniqueWave)
     {
         saveCheckpoint();
@@ -181,6 +192,9 @@ void Game::spawnCircle()
 
     std::unique_ptr<Circle> circle = std::make_unique<Circle>(spawnPosition, directionToHeart, word);
     circle->addScore = [this](int v) { addScore(v); };
+    circle->onExplodeSuccess = [this]() {
+        successSound.play();
+    };
 
     circles.push_back(std::move(circle));
 }
@@ -198,6 +212,7 @@ void Game::checkCollisions()
             circle->isHeartHitExplosion = true;
             circle->explode();
             heart.takeDamage();
+            hitSound.play();
         }
     }
 }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-
+#include <SFML/Audio.hpp>
 #include <SFML/System/Time.hpp>
 #include <string>
 #include <vector>
@@ -40,6 +40,10 @@ private:
     const std::string hardWordsPath = "../src/words/.hard_words.txt";
     const std::string uniqueWordsPath = "../src/words/.unique_words.txt";
     const std::string dataPath = "../src/data/.checkpoint.txt";
+    const std::string soundSuccessPath = "../src/sounds/success.mp3";
+    const std::string soundHitPath = "../src/sounds/hit.mp3";
+    const std::string soundWavePath = "../src/sounds/wave.mp3";
+    const std::string soundGameOverPath = "../src/sounds/gameover.mp3";
     const sf::Time pauseAfterWave = sf::seconds(3);
     const sf::Time timeToSpawnCircleIfUniqueWave = sf::milliseconds(450);
     const sf::Time minTimeToSpawnCircle = sf::milliseconds(1200);
@@ -73,6 +77,15 @@ private:
     std::vector<std::string> mediumWords;
     std::vector<std::string> hardWords;
     std::vector<std::string> uniqueWords;
+
+    sf::SoundBuffer successBuffer;
+    sf::Sound successSound;
+    sf::SoundBuffer hitBuffer;
+    sf::Sound hitSound;
+    sf::SoundBuffer waveBuffer;
+    sf::Sound waveSound;
+    sf::SoundBuffer gameOverBuffer;
+    sf::Sound gameOverSound;
 
     void initWords();
     void spawnCircle();
