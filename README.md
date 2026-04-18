@@ -8,7 +8,7 @@ https://github.com/user-attachments/assets/1e2583b2-65ba-4a9e-b2af-a80c181fd198
 
 </table>
 
-[![Itch.io](https://img.shields.io/badge/Play_on_Itch.io-FA5C5C?style=for-the-badge&logo=itch.io&logoColor=white)](https://satorish.itch.io/asteroids-raylib)
+[![Itch.io](https://img.shields.io/badge/Play_on_Itch.io-FA5C5C?style=for-the-badge&logo=itch.io&logoColor=white)](https://satorish.itch.io/lexicore)
 
 </div>
 
