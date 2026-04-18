@@ -1,16 +1,13 @@
-# LexiCore — Typing Defense Game
-
-## 📸 Video gameplay
-https://github.com/user-attachments/assets/1e2583b2-65ba-4a9e-b2af-a80c181fd198
-
 <div align="center">
-<table align="center">
-
-</table>
+  
+# LexiCore — Typing Defense Game
 
 [![Itch.io](https://img.shields.io/badge/Play_on_Itch.io-FA5C5C?style=for-the-badge&logo=itch.io&logoColor=white)](https://satorish.itch.io/lexicore)
 
 </div>
+
+## 📸 Video gameplay
+https://github.com/user-attachments/assets/1e2583b2-65ba-4a9e-b2af-a80c181fd198
 
 A fast-paced typing defense game built with **C++ and SFML 3**. Words fly toward your heart from all sides — type them correctly to destroy the incoming circles before they reach you. Survive as many waves as you can.
 
