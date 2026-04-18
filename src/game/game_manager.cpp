@@ -29,10 +29,12 @@ Game::Game(sf::RenderWindow &window, int checkpoint)
     ui.bar.setMaxWidth(waveDuration);
     ui.bar.setPosition({(float)screenWidth / 2 - ui.bar.backgroundBar.getLocalBounds().size.x / 2, 30});
 
-    (void)successBuffer.loadFromFile(soundSuccessPath);
-    (void)hitBuffer.loadFromFile(soundHitPath);
-    (void)waveBuffer.loadFromFile(soundWavePath);
-    (void)gameOverBuffer.loadFromFile(soundGameOverPath);
+    successBuffer.loadFromFile(soundSuccessPath);
+    hitBuffer.loadFromFile(soundHitPath);
+    waveBuffer.loadFromFile(soundWavePath);
+    gameOverBuffer.loadFromFile(soundGameOverPath);
+
+    successSound.setVolume(50.0f);
 
     if (checkpoint > 1)
     {

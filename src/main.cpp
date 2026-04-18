@@ -43,7 +43,7 @@ int main()
     if (music.openFromFile("../src/sounds/music.mp3"))
     {
         music.setLooping(true);
-        music.setVolume(30.0f);
+        music.setVolume(35.0f);
         music.play();
     }
 
